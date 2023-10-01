@@ -43,10 +43,12 @@ RSpec.describe AnswersController, type: :controller do
   end
 
   describe 'POST #create' do
+    let!(:question) { create(:question, :answered) }
+
     context 'with valid attributes' do
       let(:answer_params) { { question_id: question, answer: attributes_for(:answer) } }
+
       it 'saves new answer in db' do
-        # answer_params = { question_id: question, answer: attributes_for(:answer) }
         expect { post :create, params: { **answer_params } }.to change(Answer, :count).by(1)
       end
 
@@ -58,8 +60,8 @@ RSpec.describe AnswersController, type: :controller do
 
     context 'with invalid attriburtes' do
       let(:answer_params) { { question_id: question, answer: attributes_for(:answer, :invalid) } }
+
       it 'does not save answer in db' do
-        # answer_params = { question_id: question, answer: attributes_for(:answer, :invalid) }
         expect { post :create, params: { **answer_params } }.to_not change(Answer, :count)
       end
 
