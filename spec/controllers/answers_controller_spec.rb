@@ -39,6 +39,8 @@ RSpec.describe AnswersController, type: :controller do
   describe 'POST #create' do
     let!(:question) { create(:question, :answered) }
 
+    before { login(user) }
+
     context 'with valid attributes' do
       let(:answer_params) { { question_id: question, answer: attributes_for(:answer) } }
 
@@ -48,7 +50,7 @@ RSpec.describe AnswersController, type: :controller do
 
       it 'redirects to show' do
         post :create, params: { question_id: question.id, **answer_params }
-        expect(response).to redirect_to(questions_path(question))
+        expect(response).to redirect_to(question_path(question))
       end
     end
 

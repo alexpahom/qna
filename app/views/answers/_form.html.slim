@@ -1,0 +1,11 @@
+= render 'shared/errors', resource: @answer
+
+- @answer ||= Answer.new
+= form_with model: @answer,
+        url: @answer.new_record? ? question_answers_path(@question) : edit_answer_path(@answer),
+        method: @answer.new_record? ? :post : :put,
+        local: true,
+        data: { turbo: false } do |f|
+  = f.label :body, 'Respond'
+  = f.text_field :body, name: 'answer[body]'
+  = f.submit 'Publish'

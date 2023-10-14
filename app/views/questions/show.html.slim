@@ -1,0 +1,7 @@
+h1= @question.title
+p= @question.body
+
+= render 'answers/form'
+
+p 'Answers'
+= render @question.answers.reject { |row| row.new_record? }

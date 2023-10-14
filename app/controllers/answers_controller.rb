@@ -13,11 +13,13 @@ class AnswersController < ApplicationController
     @answer = @question.answers.build(**answer_params, author: current_user)
 
     if @answer.save
-      redirect_to @question
+      redirect_to question_path(@question)
     else
       render 'questions/show'
     end
   end
+
+  def edit; end
 
   def update
     if @answer.update(answer_params)
