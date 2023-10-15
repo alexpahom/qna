@@ -6,6 +6,6 @@
         method: @answer.new_record? ? :post : :put,
         local: true,
         data: { turbo: false } do |f|
-  = f.label :body, 'Respond'
+  = f.label :body, 'Answer'
   = f.text_field :body, name: 'answer[body]'
   = f.submit 'Publish'

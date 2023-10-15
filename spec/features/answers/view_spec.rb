@@ -7,7 +7,7 @@ describe 'user can see answers', "
 " do
 
   let(:user) { create(:user) }
-  let(:question) { create(:question, :with_answers) }
+  let(:question) { create(:question, :answered) }
 
   describe 'Authenticated user' do
     before do
