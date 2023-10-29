@@ -1,0 +1,6 @@
+= render 'shared/errors', resource: @question
+
+= form_with url: new_question_answer_path(@question), local: true, data: { turbo: false } do |f|
+  = f.label :Respond
+  = f.text_field :body, name: 'answer[body]'
+  = f.submit 'Respond'

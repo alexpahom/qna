@@ -1,0 +1,4 @@
+= if current_user.present?
+  -p= link_to 'New Question', new_question_path
+
+ul = render @questions
