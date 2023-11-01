@@ -16,7 +16,7 @@ describe 'user can delete their answers', "
   end
 
   describe 'Delete answer' do
-    it 'deletes user\'s own answer' do
+    it 'deletes user\'s own answer', xhr: true do
       fill_in 'Answer', with: answer_text
       click_on 'Publish'
       click_on 'Delete'
