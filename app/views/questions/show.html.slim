@@ -3,5 +3,8 @@ p= @question.body
 
 = render 'answers/form'
 
+.answer-errors
+  = render 'shared/errors', resource: @answer
+
 p 'Answers'
 = render @question.answers.reject { |row| row.new_record? }

@@ -1,6 +1,6 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!, except: %i[show]
-  before_action :set_question, only: %i[show new edit create]
+  before_action :set_question, only: %i[show new create]
   before_action :set_answer, only: %i[show edit update destroy]
 
   def show; end
@@ -11,27 +11,21 @@ class AnswersController < ApplicationController
 
   def create
     @answer = @question.answers.build(**answer_params, author: current_user)
-
-    if @answer.save
-      redirect_to question_path(@question)
-    else
-      render 'questions/show'
-    end
+    @answer.save
   end
 
   def edit; end
 
   def update
-    if @answer.update(answer_params)
-      redirect_to answer_path(@answer)
-    else
-      render :edit
+    @answer.update(answer_params)
+    respond_to do |format|
+      format.html { redirect_to question_path(@answer.question) }
+      format.js
     end
   end
 
   def destroy
     @answer.destroy
-    redirect_to @answer.question
   end
 
   private

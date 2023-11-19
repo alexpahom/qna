@@ -1,5 +1,19 @@
-li
-  p =question.title
-  p =question.body
+
+li(id="question_#{question.id}")
+  p.question(id="question_title_#{question.id}") =question.title
+  p.question(id="question_body_#{question.id}") =question.body
+
   - if question.author == current_user
-    = button_to 'Delete', question_path(question), method: :delete, confirm: 'Are you sure ?'
+    .panel
+      = button_to 'Edit', edit_question_path(question), method: :get, remote: true, id: "edit_#{question.id}"
+      = button_to 'Delete', question_path(question), method: :delete, remote: true
+      = button_to 'Cancel', question_path(question), method: :get, remote: true, id: "cancel_#{question.id}", style: 'display:none'
+    .errors(style='color:red' id="errors_#{question.id}")
+
+    .edit_form(hidden=true id="edit_form_#{question.id}")
+      = form_with model: question, method: :put, local: false do |f|
+        = f.label :title
+        = f.text_field :title
+        = f.label :body
+        = f.text_field :body
+        = f.submit 'Update'

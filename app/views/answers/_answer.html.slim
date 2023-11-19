@@ -1,3 +1,19 @@
-p =answer.body
-- if answer.author == current_user
-  = button_to 'Delete', answer_path(answer), method: :delete, confirm: 'Are you sure ?'
+/ p =answer.body
+/ - if answer.author == current_user
+/   = button_to 'Delete', answer_path(answer), method: :delete, confirm: 'Are you sure ?'
+
+
+div(id="answer_#{answer.id}")
+  p.answer(id="answer_text_#{answer.id}") =answer.body
+  - if answer.author == current_user
+    .panel
+      = button_to 'Edit', edit_answer_path(answer), method: :get, remote: true, id: "edit_#{answer.id}"
+      = button_to 'Delete', answer_path(answer), method: :delete, remote: true
+      = button_to 'Cancel', edit_answer_path(answer), method: :get, remote: true, id: "cancel_#{answer.id}", style: 'display:none'
+
+    .errors(hidden=true style="color:red" id="errors_#{answer.id}")
+    .edit_form(hidden=true id="edit_form_#{answer.id}")
+      = form_with model: answer, method: :put, local: false do |f|
+        = f.label :body, 'Respond'
+        = f.text_field :body, name: 'answer[body]'
+        = f.submit 'Update'

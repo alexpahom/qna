@@ -1,0 +1,10 @@
+<% if @question.valid? %>
+  $("#edit_<%= @question.id %>").toggle()
+  $("#cancel_<%= @question.id %>").toggle()
+  $("#edit_form_<%= @question.id %>").toggle()
+  $("#errors_<%= @question.id %>").empty()
+  $("#question_title_<%= @question.id %>").html('<%= @question.title %>')
+  $("#question_body_<%= @question.id %>").html('<%= @question.body %>')
+<% else %>
+  $("#errors_<%= @question.id %>").html('<%= @question.errors.full_messages.join(',') %>')
+<% end %>
