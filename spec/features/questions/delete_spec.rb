@@ -10,7 +10,7 @@ describe 'user can delete their questions', "
   let(:question) { create(:question, :answered) }
 
   describe 'Delete question' do
-    it 'deletes user\'s own question' do
+    it 'deletes user\'s own question', js: true do
       login(question.author)
       visit questions_path
       click_on 'Delete'

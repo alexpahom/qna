@@ -15,7 +15,7 @@ describe 'user can see answers', "
       visit question_path(question)
     end
 
-    it 'can view answers to the question' do
+    it 'can view answers to the question', xhr: true do
       answer1, answer2 = question.answers
 
       expect(page).to have_content answer1.body

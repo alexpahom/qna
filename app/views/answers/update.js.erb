@@ -1,0 +1,9 @@
+<% if @answer.valid? %>
+  $("#edit_<%= @answer.id %>").toggle()
+  $("#cancel_<%= @answer.id %>").toggle()
+  $("#edit_form_<%= @answer.id %>").toggle()
+  $("#errors_<%= @answer.id %>").empty()
+  $("#answer_text_<%= @answer.id %>").html('<%= @answer.body %>')
+<% else %>
+  $("#errors_<%= @answer.id %>").html('<%= @answer.errors.full_messages.join(',') %>')
+<% end %>
