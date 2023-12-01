@@ -7,4 +7,5 @@ p= @question.body
   = render 'shared/errors', resource: @answer
 
 p 'Answers'
-= render @question.answers.reject { |row| row.new_record? }
+.answers
+  = render @question.answers.reject { |row| row.new_record? }

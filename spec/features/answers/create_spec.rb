@@ -1,4 +1,5 @@
 require 'rails_helper'
+require 'byebug'
 
 describe 'user can create answer', "
   In order to reply to question
@@ -25,7 +26,7 @@ describe 'user can create answer', "
       expect(page).to have_content response_text
     end
 
-    it 'created question without body', xhr: true do
+    it 'created question without body', js: true do
       click_on 'Publish'
       expect(page).to have_content "Body can't be blank"
     end

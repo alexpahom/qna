@@ -32,8 +32,7 @@ rescue ActiveRecord::PendingMigrationError => e
 end
 RSpec.configure do |config|
   Capybara.javascript_driver = :selenium_chrome
-  Webdrivers::Chromedriver.required_version = '119.0.6045.106'
-  # Selenium::WebDriver::Chrome.path = "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
+
   config.include FactoryBot::Syntax::Methods
   config.include ControllerHelper, type: :controller
   config.include Devise::Test::ControllerHelpers, type: :controller

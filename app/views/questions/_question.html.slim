@@ -10,7 +10,7 @@ li(id="question_#{question.id}")
       = button_to 'Cancel', question_path(question), method: :get, remote: true, id: "cancel_#{question.id}", style: 'display:none'
     .errors(style='color:red' id="errors_#{question.id}")
 
-    .edit_form(hidden=true id="edit_form_#{question.id}")
+    .edit_form(style='display:none' id="edit_form_#{question.id}")
       = form_with model: question, method: :put, local: false do |f|
         = f.label :title
         = f.text_field :title
