@@ -8,4 +8,4 @@ p= @question.body
 
 p 'Answers'
 .answers
-  = render @question.answers.reject { |row| row.new_record? }
+  = render @question.answers.order(best: :desc)
