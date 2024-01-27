@@ -8,11 +8,11 @@ p= @question.body
       p= link_to 'X', purge_attachment_url(file), method: :delete, remote: true,
               id: "delete_attachment_#{file.filename.to_s}"
 
-= render 'answers/form'
-
 .answer-errors
   = render 'shared/errors', resource: @answer
 
-p 'Answers'
+p(class="fs-4") Answers
 .answers
   = render @question.answers.order(best: :desc)
+
+= render 'answers/form'

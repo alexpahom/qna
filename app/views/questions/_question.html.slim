@@ -8,6 +8,7 @@ div(id="question_#{question.id}" class="container m-3")
     - if question.author == current_user
       div(class="col-3 d-flex justify-content-center align-items-center")
         .panel
+          = link_to 'Show', question_path(question), class: 'btn btn-secondary d-inline'
           = link_to 'Edit', edit_question_path(question), method: :get, remote: true, id: "edit_#{question.id}",
                   class: 'btn btn-secondary d-inline mx-2'
           = link_to 'Delete', question_path(question), method: :delete, remote: true,
