@@ -28,5 +28,5 @@ div(id="question_#{question.id}" class="container m-3")
           = f.file_field :files, multiple: true, class: 'form-control'
         .mb-3
           = f.submit 'Update', class: 'btn btn-primary mx-2'
-          = link_to 'Cancel', question_path(question), method: :get, remote: true, id: "cancel_#{question.id}",
-                  class: 'btn btn-secondary'
+          = button_to 'Cancel', question_path(question), method: :get, remote: true, id: "cancel_#{question.id}",
+                  class: 'btn btn-secondary', style: 'display:none'
