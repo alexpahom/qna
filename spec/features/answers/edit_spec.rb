@@ -33,16 +33,13 @@ describe 'user can edit his answer', "
     end
 
     it 'can attach files while editing', js: true do
-      new_answer_text = 'test response'
 
       within("#edit_form_#{answer_to_edit.id}") do |node|
-        node.fill_in 'Answer', with: new_answer_text
-        node.attach_file 'Files',
+        node.fill_in 'Respond', with: 'test response'
+        node.attach_file 'Attach',
                          ["#{Rails.root.join('spec/rails_helper.rb')}", "#{Rails.root.join('spec/spec_helper.rb')}"]
         node.click_on 'Update'
       end
-
-      click_on 'Publish'
 
       within("#answer_#{answer_to_edit.id}") do |node|
         expect(node).to have_link 'rails_helper.rb'

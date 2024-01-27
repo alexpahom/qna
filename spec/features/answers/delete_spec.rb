@@ -25,7 +25,7 @@ describe 'user can delete their answers', "
 
     it 'can delete attachment', js: true do
       fill_in 'Answer', with: answer_text
-      attach_file 'Files', ["#{Rails.root.join('spec/rails_helper.rb')}", "#{Rails.root.join('spec/spec_helper.rb')}"]
+      attach_file 'Attach', ["#{Rails.root.join('spec/rails_helper.rb')}", "#{Rails.root.join('spec/spec_helper.rb')}"]
       click_on 'Publish'
 
       find_link(id: 'delete_attachment_rails_helper.rb').click
