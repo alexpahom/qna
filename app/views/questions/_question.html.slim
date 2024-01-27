@@ -1,21 +1,31 @@
 
-li(id="question_#{question.id}")
-  p.question(id="question_title_#{question.id}") =question.title
-  p.question(id="question_body_#{question.id}") =question.body
+div(id="question_#{question.id}" class="container m-3")
+  div(class="col-10 row mb-4 border-bottom")
+    div(class="col-7")
+      div.question(id="question_title_#{question.id}" class="col fs-4 mb-3") =question.title
+      div.question(id="question_body_#{question.id}" class="col") =question.body
 
-  - if question.author == current_user
-    .panel
-      = button_to 'Edit', edit_question_path(question), method: :get, remote: true, id: "edit_#{question.id}"
-      = button_to 'Delete', question_path(question), method: :delete, remote: true
-      = button_to 'Cancel', question_path(question), method: :get, remote: true, id: "cancel_#{question.id}", style: 'display:none'
-    .errors(style='color:red' id="errors_#{question.id}")
+    - if question.author == current_user
+      div(class="col-3 d-flex justify-content-center align-items-center")
+        .panel
+          = link_to 'Edit', edit_question_path(question), method: :get, remote: true, id: "edit_#{question.id}",
+                  class: 'btn btn-secondary d-inline mx-2'
+          = link_to 'Delete', question_path(question), method: :delete, remote: true,
+                  class: 'btn btn-secondary d-inline'
+        .errors(style='color:red' id="errors_#{question.id}")
 
     .edit_form(style='display:none' id="edit_form_#{question.id}")
       = form_with model: question, method: :put, local: false do |f|
-        = f.label :title
-        = f.text_field :title
-        = f.label :body
-        = f.text_field :body
-        = f.label :files, 'Attach'
-        = f.file_field :files, multiple: true
-        = f.submit 'Update'
+        .mb-3
+          = f.label :title, class: 'form-label'
+          = f.text_field :title, class: 'form-control'
+        .mb-3
+          = f.label :body, class: 'form-label'
+          = f.text_field :body, class: 'form-control'
+        .mb-3
+          = f.label :files, 'Attach', class: 'form-label'
+          = f.file_field :files, multiple: true, class: 'form-control'
+        .mb-3
+          = f.submit 'Update', class: 'btn btn-primary mx-2'
+          = link_to 'Cancel', question_path(question), method: :get, remote: true, id: "cancel_#{question.id}",
+                  class: 'btn btn-secondary'
