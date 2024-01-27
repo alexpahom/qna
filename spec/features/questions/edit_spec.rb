@@ -17,7 +17,7 @@ describe 'user can edit his own question', "
     it 'can attach file during update', js: true do
       fill_in 'Title', with: 'question title'
       fill_in 'Body', with: 'test description'
-      attach_file 'File', ["#{Rails.root.join('spec/rails_helper.rb')}", "#{Rails.root.join('spec/spec_helper.rb')}"]
+      attach_file 'Attach', ["#{Rails.root.join('spec/rails_helper.rb')}", "#{Rails.root.join('spec/spec_helper.rb')}"]
 
       click_on 'Update'
       visit question_path(question.id)

@@ -8,7 +8,7 @@ describe 'user can delete their questions', "
 
   let(:user) { create(:user) }
   let(:question) { create(:question, :answered) }
-  let(:filepaths) { create(question.files.map(&:filename)) }
+  let(:filepaths) { question.files.map(&:filename) }
 
   describe 'Delete question' do
     it 'deletes user\'s own question', js: true do
