@@ -1,13 +1,17 @@
 = render 'shared/errors', resource: @question
 
 = form_with model: @question do |f|
-  = f.label :title
-  = f.text_field :title
+  .mb-3
+    = f.label :title, class: 'form-label'
+    = f.text_field :title, class: 'form-control'
 
-  = f.label :body
-  = f.text_area :body
+  .mb-3
+    = f.label :body, class: 'form-label'
+    = f.text_area :body, class: 'form-control'
 
-  = f.label :files, 'Attach'
-  = f.file_field :files, multiple: true
+  .mb-3
+    = f.label :files, 'Attach', class: 'form-label'
+    = f.file_field :files, multiple: true, class: 'form-control'
 
-  = f.submit 'Publish'
+  = f.submit 'Publish', class: 'btn btn-primary mx-4'
+  = link_to 'Back', questions_path, class: 'btn btn-secondary'
