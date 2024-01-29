@@ -22,5 +22,11 @@ FactoryBot.define do
         ]
       end
     end
+
+    trait :with_gist do
+      after(:create) do |question|
+        create(:link, linkable: question)
+      end
+    end
   end
 end
