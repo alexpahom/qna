@@ -13,5 +13,14 @@ FactoryBot.define do
         create_list(:answer, 3, question: question)
       end
     end
+
+    trait :with_attachments do
+      files do
+        [
+          Rack::Test::UploadedFile.new("#{Rails.root.join('spec/rails_helper.rb')}"),
+          Rack::Test::UploadedFile.new("#{Rails.root.join('spec/spec_helper.rb')}")
+        ]
+      end
+    end
   end
 end

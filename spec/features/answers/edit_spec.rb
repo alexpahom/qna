@@ -13,7 +13,10 @@ describe 'user can edit his answer', "
     before do
       login(answer_to_edit.author)
       visit question_path(question)
-      click_on 'Edit'
+
+      within("#answer_#{answer_to_edit.id}") do |node|
+        node.click_on 'Edit'
+      end
     end
 
     it 'responds a question', js: true do
@@ -26,6 +29,21 @@ describe 'user can edit his answer', "
 
       within("#answer_#{answer_to_edit.id}") do |node|
         expect(node).to have_content new_answer_text
+      end
+    end
+
+    it 'can attach files while editing', js: true do
+
+      within("#edit_form_#{answer_to_edit.id}") do |node|
+        node.fill_in 'Respond', with: 'test response'
+        node.attach_file 'Attach',
+                         ["#{Rails.root.join('spec/rails_helper.rb')}", "#{Rails.root.join('spec/spec_helper.rb')}"]
+        node.click_on 'Update'
+      end
+
+      within("#answer_#{answer_to_edit.id}") do |node|
+        expect(node).to have_link 'rails_helper.rb'
+        expect(node).to have_link 'spec_helper.rb'
       end
     end
 

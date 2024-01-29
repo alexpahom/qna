@@ -7,6 +7,14 @@ div(id="answer_#{answer.id}")
   - if answer.best?
     = 'BEST ANSWER'
   p.answer(id="answer_text_#{answer.id}") =answer.body
+
+  - answer.files.each do |file|
+    div(id="attachment_#{file.id}")
+      p= link_to file.filename.to_s, url_for(file), id: file.signed_id
+      - if (answer.author == current_user) || (answer.question.author == current_user)
+        p= link_to 'X', purge_attachment_url(file), method: :delete, remote: true,
+                id: "delete_attachment_#{file.filename.to_s}"
+
   - if answer.question.author == current_user && !answer.best?
     = form_with model: answer, method: :put, remote: false do |f|
       = f.check_box :best, checked: true, hidden: true
@@ -22,4 +30,6 @@ div(id="answer_#{answer.id}")
       = form_with model: answer, method: :put, local: false do |f|
         = f.label :body, 'Respond'
         = f.text_field :body, name: 'answer[body]'
+        = f.label :files, 'Attach'
+        = f.file_field :files, multiple: true
         = f.submit 'Update'

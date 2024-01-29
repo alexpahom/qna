@@ -28,6 +28,7 @@ gem 'devise'
 gem "net-http"
 # gem 'jquery-rails'
 gem 'bootstrap'
+gem "google-cloud-storage", "~> 1.11", require: false
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false

@@ -22,6 +22,17 @@ describe 'user can delete their answers', "
       click_on 'Delete'
       expect(page).not_to have_content answer_text
     end
+
+    it 'can delete attachment', js: true do
+      fill_in 'Answer', with: answer_text
+      attach_file 'Attach', ["#{Rails.root.join('spec/rails_helper.rb')}", "#{Rails.root.join('spec/spec_helper.rb')}"]
+      click_on 'Publish'
+
+      find_link(id: 'delete_attachment_rails_helper.rb').click
+      find_link(id: 'delete_attachment_spec_helper.rb').click
+      expect(page).not_to have_content 'rails_helper.rb'
+      expect(page).not_to have_content 'spec_helper.rb'
+    end
   end
 
   describe 'Unsuccessful delete' do
