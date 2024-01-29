@@ -7,7 +7,10 @@ p= @question.body
       p= link_to file.filename.to_s, url_for(file), id: file.signed_id
       p= link_to 'X', purge_attachment_url(file), method: :delete, remote: true,
               id: "delete_attachment_#{file.filename.to_s}"
-
+.links
+  ul
+    - @question.links.each do |link|
+      li = link_to link.name, link.url, target: '_blank'
 .answer-errors
   = render 'shared/errors', resource: @answer
 
