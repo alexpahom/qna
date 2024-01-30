@@ -20,12 +20,21 @@ div(id="question_#{question.id}" class="container m-3")
         .mb-3
           = f.label :title, class: 'form-label'
           = f.text_field :title, class: 'form-control'
+
         .mb-3
           = f.label :body, class: 'form-label'
           = f.text_field :body, class: 'form-control'
+
         .mb-3
           = f.label :files, 'Attach', class: 'form-label'
           = f.file_field :files, multiple: true, class: 'form-control'
+
+        .mb-3
+          = f.fields_for :links do |l|
+            = render 'link_fields', f: l
+          .links
+            = link_to_add_association 'Add', f, :links
+
         .mb-3
           = f.submit 'Update', class: 'btn btn-primary mx-2'
           = button_to 'Cancel', question_path(question), method: :get, remote: true, id: "cancel_#{question.id}",

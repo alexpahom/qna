@@ -48,9 +48,17 @@ div(id="answer_#{answer.id}")
           .mb-3
             = f.label :body, 'Respond', class: 'form-label'
             = f.text_field :body, name: 'answer[body]', class: 'form-control'
+
           .mb-3
             = f.label :files, 'Attach', class: 'form-label'
             = f.file_field :files, multiple: true, class: 'form-control'
+
+          .mb-3
+            = f.fields_for :links do |l|
+              = render 'link_fields', f: l
+            .links
+              = link_to_add_association 'Add', f, :links
+
           .mb-3
             = f.submit 'Update', class: 'btn btn-primary'
             = button_to 'Cancel', edit_answer_path(answer), method: :get, remote: true, id: "cancel_#{answer.id}",
