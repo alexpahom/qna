@@ -10,7 +10,11 @@ p= @question.body
 .links
   ul
     - @question.links.each do |link|
-      li = link_to link.name, link.url, target: '_blank'
+      li(id="link_#{link.id}")
+        = link_to link.name, link.url, target: '_blank'
+        - if @question.author == current_user
+          = link_to 'X', destroy_link_url(link), method: :delete, remote: true, class: 'btn my-2'
+
 .answer-errors
   = render 'shared/errors', resource: @answer
 
