@@ -17,6 +17,7 @@ class Link < ApplicationRecord
     return unless gist?
     url.match(GIST_ID_REGEXP)[-1]
   end
+
   private
 
   def append_scheme
