@@ -1,0 +1,66 @@
+javascript:
+    (() => {
+        const createDescriptionElement = (result) => {
+            const description = result.description
+            let h = document.createElement('h4')
+            h.textContent = description
+            return h
+        }
+
+        const createFilenameElement = (file) => {
+            let filename = document.createElement('p')
+            filename.innerText = file.filename
+            filename.setAttribute('class', 'fst-italic')
+            return filename
+        }
+
+        const createContentElement = (file) => {
+            let content = document.createElement('div')
+            content.innerText = file.content
+            return content
+        }
+
+        const createFileWrapperElement = (file) => {
+            let fileWrapper = document.createElement('div')
+            fileWrapper.setAttribute('class', 'm-4 border p-2')
+
+            fileWrapper.appendChild(createFilenameElement(file))
+            fileWrapper.appendChild(createContentElement(file))
+            return fileWrapper
+        }
+
+        const createGistWrapperElement = () => {
+            let div = document.createElement('div')
+            div.setAttribute('class', 'wrapper border p-2 overflow-auto')
+            return div
+        }
+
+        const loader = () => {
+            const node = $("#link_#{link.id} .gist-wrapper")
+            window.GistClient.setToken("#{ENV['GITHUB_TOKEN']}")
+            window.GistClient
+                .getOneById("#{link.gist_id}")
+                .then(result => {
+                    let files = result.files
+                    let filenames = Object.keys(files)
+
+                    let div = createGistWrapperElement()
+
+                    div.appendChild(createDescriptionElement(result))
+                    filenames.forEach( file => {
+                        let fileWrapper = createFileWrapperElement(files[file])
+                        div.appendChild(fileWrapper)
+                    })
+                    node.append(div)
+                })
+                .catch(() => {
+                    node.text('Failed to load gist')
+                })
+        }
+
+        if (document.readyState === 'complete') {
+            loader()
+        } else {
+            document.addEventListener('DOMContentLoaded', loader)
+        }
+    })()

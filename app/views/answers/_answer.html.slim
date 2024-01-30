@@ -21,9 +21,16 @@ div(id="answer_#{answer.id}")
         ul
           - answer.links.each do |link|
             li(id="link_#{link.id}")
-              = link_to link.name, link.url, target: '_blank'
-              - if @question.author == current_user
-                = link_to 'X', destroy_link_url(link), method: :delete, remote: true, class: 'btn my-2'
+              .row
+                .gist-wrapper.col-6
+                  - if link.gist?
+                    = render 'shared/gist_uploader', link: link
+                  - else
+                    = link_to link.name, link.url, target: '_blank'
+
+                - if answer.author == current_user
+                  .col-3
+                    = link_to 'X', destroy_link_url(link), method: :delete, remote: true, class: 'btn my-2'
 
       - if answer.question.author == current_user && !answer.best?
         = form_with model: answer, method: :put, remote: false do |f|
