@@ -56,8 +56,10 @@ ActiveRecord::Schema.define(version: 2024_01_30_030013) do
 
   create_table "badges", force: :cascade do |t|
     t.string "description"
+    t.bigint "question_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["question_id"], name: "index_badges_on_question_id"
   end
 
   create_table "links", force: :cascade do |t|
@@ -104,6 +106,7 @@ ActiveRecord::Schema.define(version: 2024_01_30_030013) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "answers", "questions"
   add_foreign_key "answers", "users", column: "author_id"
+  add_foreign_key "badges", "questions"
   add_foreign_key "questions", "users", column: "author_id"
   add_foreign_key "users_badges", "badges"
   add_foreign_key "users_badges", "users"

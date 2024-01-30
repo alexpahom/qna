@@ -15,5 +15,9 @@ class Answer < ApplicationRecord
     return unless best?
 
     question.answers.where.not(id: id).update_all(best: false)
+
+    return unless question.badge.present?
+    UsersBadge.where(badge: question.badge).destroy_all
+    self.author.badges << question.badge
   end
 end

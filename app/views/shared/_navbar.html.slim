@@ -1,5 +1,7 @@
 nav
   - if current_user.present?
-    = button_to 'Logout', destroy_user_session_path, method: :delete, class: 'btn btn-secondary'
+    = link_to 'Logout', destroy_user_session_path, method: :delete, class: 'btn btn-secondary'
   - else
-    = button_to 'Login', new_user_session_path, class: 'btn btn-primary'
+    = link_to 'Login', new_user_session_path, class: 'btn btn-primary'
+
+  = link_to 'Badges', badges_path, class: 'btn mx-3'
