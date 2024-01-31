@@ -3,18 +3,10 @@ class AnswersController < ApplicationController
   before_action :set_question, only: %i[show new create]
   before_action :set_answer, only: %i[show edit update destroy]
 
-  def show; end
-
-  def new
-    @answer = Answer.new
-  end
-
   def create
     @answer = @question.answers.build(**answer_params, author: current_user)
     @answer.save
   end
-
-  def edit; end
 
   def update
     @answer.update(answer_params)
@@ -39,6 +31,6 @@ class AnswersController < ApplicationController
   end
 
   def answer_params
-    params.require(:answer).permit(:body, :best, files: [])
+    params.require(:answer).permit(:body, :best, files: [], links_attributes: [:name, :url, :id, :_destroy])
   end
 end

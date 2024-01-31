@@ -1,0 +1,14 @@
+- if @badges.empty?
+  p.fs-5 Sorry!
+  p You have no badges so far! Once someone picks your answer as the best you will see the badges here
+- else
+  h3 Badges
+  .container
+    - @badges.each do |badge|
+      .badge-wrapper.p-4.border.m-4.d-inline-block
+        .d-flex.flex-column.justify-content-center.align-items-center
+          .description.my-3 = "Badge: #{badge.description}"
+          = image_tag url_for(badge.image), size: '100x100', class: 'image my-4'
+          .title = "Question: #{badge.question.title}"
+
+= link_to 'Back', questions_path, class: 'btn btn-secondary'

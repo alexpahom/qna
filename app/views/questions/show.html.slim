@@ -7,6 +7,20 @@ p= @question.body
       p= link_to file.filename.to_s, url_for(file), id: file.signed_id
       p= link_to 'X', purge_attachment_url(file), method: :delete, remote: true,
               id: "delete_attachment_#{file.filename.to_s}"
+.links
+  ul
+    - @question.links.each do |link|
+      li(id="link_#{link.id}")
+        .row
+          .gist-wrapper.col-6
+            - if link.gist?
+              = render 'shared/gist_uploader', link: link
+            - else
+              = link_to link.name, link.url, target: '_blank'
+
+          - if @question.author == current_user
+            .col-3
+              = link_to 'X', destroy_link_url(link), method: :delete, remote: true, class: 'btn my-2'
 
 .answer-errors
   = render 'shared/errors', resource: @answer
