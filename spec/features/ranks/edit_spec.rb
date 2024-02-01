@@ -33,7 +33,7 @@ describe 'user can change vote for question/answer', %{
   end
 
   describe 'Answer' do
-    let(:question) { create(:question, :answered_ranked) }
+    let(:question) { create(:question, :answered) }
     let(:user) { question.author }
 
     before do
@@ -42,7 +42,7 @@ describe 'user can change vote for question/answer', %{
     end
 
     it 'Can change the vote fom up to against', js: true do
-      within('.rank-wrapper') do |node|
+      within(:xpath, first_answer_xpath) do |node|
         click_on '+'
         click_on '-'
         expect(node).to have_content("Rank: #{question.answers.first.ranking}")
@@ -50,7 +50,7 @@ describe 'user can change vote for question/answer', %{
     end
 
     it 'Can change the vote from against to up', js: true do
-      within('.rank-wrapper') do |node|
+      within(:xpath, first_answer_xpath) do |node|
         click_on '-'
         click_on '+'
         expect(node).to have_content("Rank: #{question.answers.first.ranking}")

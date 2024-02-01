@@ -31,7 +31,7 @@ describe 'user can reverse vote for question/answer', %{
   end
 
   describe 'Answer' do
-    let(:question) { create(:question, :answered_ranked) }
+    let(:question) { create(:question, :answered) }
     let(:user) { question.author }
 
     before do
@@ -40,16 +40,22 @@ describe 'user can reverse vote for question/answer', %{
     end
 
     it 'Can reverse vote for', js: true do
-      within('.rank-wrapper') do |node|
+      within(:xpath, first_answer_xpath) do
+        init = question.answers.first.ranking
         click_on '+'
-        expect(node).to have_content("Rank: #{question.answers.first.ranking}")
+        click_on '+'
+        sleep 0.1
+        expect(question.answers.first.ranking).to eq(init)
       end
     end
 
     it 'Can reverse vote against', js: true do
-      within('.rank-wrapper') do |node|
+      within(:xpath, first_answer_xpath) do
+        init = question.answers.first.ranking
         click_on '-'
-        expect(node).to have_content("Rank: #{question.answers.first.ranking}")
+        click_on '-'
+        sleep 0.1
+        expect(question.answers.first.ranking).to eq(init)
       end
     end
   end

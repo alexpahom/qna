@@ -1,4 +1,6 @@
 class Answer < ApplicationRecord
+  include Rankable
+
   before_update :assign_best
 
   belongs_to :question

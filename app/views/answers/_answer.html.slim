@@ -5,6 +5,8 @@
 
 div(id="answer_#{answer.id}")
   .row.border-bottom.my-3
+    .col-2
+      = render 'shared/rankings', resource: answer
     .col-md-5
       - if answer.best?
         = 'BEST ANSWER'

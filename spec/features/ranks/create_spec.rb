@@ -1,7 +1,5 @@
 require 'rails_helper'
 
-require 'rails_helper'
-
 describe 'user can vote for question/answer', %{
   In order to get vote for question/answer
   As an authenticated user
@@ -33,7 +31,7 @@ describe 'user can vote for question/answer', %{
   end
 
   describe 'Answer' do
-    let(:question) { create(:question, :answered_ranked) }
+    let(:question) { create(:question, :answered) }
     let(:user) { question.author }
 
     before do
@@ -42,16 +40,18 @@ describe 'user can vote for question/answer', %{
     end
 
     it 'Can vote for', js: true do
-      within('.rank-wrapper') do |node|
+      within(:xpath, first_answer_xpath) do |node|
+        initial_rank = first_answer_ranking
         click_on '+'
-        expect(node).to have_content("Rank: #{question.answers.first.ranking + 1}")
+        expect(node).to have_content("Rank: #{initial_rank + 1}")
       end
     end
 
     it 'Can vote against', js: true do
-      within('.rank-wrapper') do |node|
+      within(:xpath, first_answer_xpath) do |node|
+        initial_rank = first_answer_ranking
         click_on '-'
-        expect(node).to have_content("Rank: #{question.answers.first.ranking - 1}")
+        expect(node).to have_content("Rank: #{initial_rank - 1}")
       end
     end
   end
