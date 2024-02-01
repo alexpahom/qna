@@ -1,5 +1,9 @@
-h1= @question.title
-p= @question.body
+.row
+  .col-2
+    = render 'shared/rankings', resource: @question
+  .col-6
+    h1= @question.title
+    p= @question.body
 
 - if @question.files.attached?
   - @question.files.each do |file|

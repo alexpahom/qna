@@ -18,15 +18,15 @@ describe 'user can vote for question/answer', %{
     end
 
     it 'Can vote for', js: true do
-      within('div[name="rank"]') do |node|
-        click_on '+1'
+      within('.rank-wrapper') do |node|
+        click_on '+'
         expect(node).to have_content('Rank: 1')
       end
     end
 
     it 'Can vote against', js: true do
-      within('div[name="rank"]') do |node|
-        click_on '-1'
+      within('.rank-wrapper') do |node|
+        click_on '-'
         expect(node).to have_content('Rank: -1')
       end
     end
@@ -42,15 +42,15 @@ describe 'user can vote for question/answer', %{
     end
 
     it 'Can vote for', js: true do
-      within('div[name="rank"]') do |node|
-        click_on '+1'
+      within('.rank-wrapper') do |node|
+        click_on '+'
         expect(node).to have_content("Rank: #{question.answers.first.ranking + 1}")
       end
     end
 
     it 'Can vote against', js: true do
-      within('div[name="rank"]') do |node|
-        click_on '-1'
+      within('.rank-wrapper') do |node|
+        click_on '-'
         expect(node).to have_content("Rank: #{question.answers.first.ranking - 1}")
       end
     end

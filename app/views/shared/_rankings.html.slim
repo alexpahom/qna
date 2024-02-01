@@ -3,13 +3,19 @@
     div = button_to '+', ranks_create_path(class: resource.class.name, resource_id: resource.id, value: 1),
             remote: true,
             method: :post,
+            name: "#{resource.class.name.downcase}_#{resource.id}",
+            'data-value': 1,
             data: { format: :json },
-            disabled: resource.author == current_user
-    div
-      = 'Rank:'
+            disabled: resource.author == current_user,
+            class: resource.rank_given(current_user)&.value == 1 ? 'btn btn-success' : 'btn btn-secondary'
+    div(class="#{resource.class.name.downcase}_#{resource.id}_ranking")
+      = 'Rank: '
       span = resource.ranking
     div = button_to '-', ranks_create_path(class: resource.class.name, resource_id: resource.id, value: -1),
             remote: true,
             method: :post,
+            name: "#{resource.class.name.downcase}_#{resource.id}",
+            'data-value': -1,
             data: { format: :json },
-            disabled: resource.author == current_user
+            disabled: resource.author == current_user,
+            class: resource.rank_given(current_user)&.value == -1 ? 'btn btn-success' : 'btn btn-secondary'

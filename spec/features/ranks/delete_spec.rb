@@ -16,15 +16,15 @@ describe 'user can reverse vote for question/answer', %{
     end
 
     it 'Can reverse vote for', js: true do
-      within('div[name="rank"]') do |node|
-        click_on '+1'
+      within('.rank-wrapper') do |node|
+        click_on '+'
         expect(node).to have_content('Rank: 0')
       end
     end
 
     it 'Can reverse vote against', js: true do
-      within('div[name="rank"]') do |node|
-        click_on '-1'
+      within('.rank-wrapper') do |node|
+        click_on '-'
         expect(node).to have_content('Rank: 0')
       end
     end
@@ -40,15 +40,15 @@ describe 'user can reverse vote for question/answer', %{
     end
 
     it 'Can reverse vote for', js: true do
-      within('div[name="rank"]') do |node|
-        click_on '+1'
+      within('.rank-wrapper') do |node|
+        click_on '+'
         expect(node).to have_content("Rank: #{question.answers.first.ranking}")
       end
     end
 
     it 'Can reverse vote against', js: true do
-      within('div[name="rank"]') do |node|
-        click_on '-1'
+      within('.rank-wrapper') do |node|
+        click_on '-'
         expect(node).to have_content("Rank: #{question.answers.first.ranking}")
       end
     end

@@ -1,9 +1,9 @@
 
 div(id="question_#{question.id}" class="container m-3")
   div(class="col-10 row mb-4 border-bottom")
-    div.col-2
-      = render 'shared/rankings', resource: question
-
+    div.col-2.d-flex.align-items-center
+      .ranking
+        = "Rank: #{question.ranking}"
     div.col-6
       div.question(id="question_title_#{question.id}" class="col fs-4 mb-3") =question.title
       div.question(id="question_body_#{question.id}" class="col") =question.body

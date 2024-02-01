@@ -13,7 +13,7 @@ import * as ActiveStorage from "@rails/activestorage"
 import 'bootstrap'
 import { Tooltip, Popover } from "bootstrap"
 import "channels"
-import './sample'
+import './ranks'
 
 require("../stylesheets/application.scss")
 

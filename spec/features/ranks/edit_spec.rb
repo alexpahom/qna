@@ -16,17 +16,17 @@ describe 'user can change vote for question/answer', %{
     end
 
     it 'Can change the vote from up to against', js: true do
-      within('div[name="rank"]') do |node|
-        click_on '+1'
-        click_on '-1'
+      within('.rank-wrapper') do |node|
+        click_on '+'
+        click_on '-'
         expect(node).to have_content('Rank: -1')
       end
     end
 
     it 'Can change the vote from against to up', js: true do
-      within('div[name="rank"]') do |node|
-        click_on '-1'
-        click_on '+1'
+      within('.rank-wrapper') do |node|
+        click_on '-'
+        click_on '+'
         expect(node).to have_content('Rank: 1')
       end
     end
@@ -42,17 +42,17 @@ describe 'user can change vote for question/answer', %{
     end
 
     it 'Can change the vote fom up to against', js: true do
-      within('div[name="rank"]') do |node|
-        click_on '+1'
-        click_on '-1'
+      within('.rank-wrapper') do |node|
+        click_on '+'
+        click_on '-'
         expect(node).to have_content("Rank: #{question.answers.first.ranking}")
       end
     end
 
     it 'Can change the vote from against to up', js: true do
-      within('div[name="rank"]') do |node|
-        click_on '-1'
-        click_on '+1'
+      within('.rank-wrapper') do |node|
+        click_on '-'
+        click_on '+'
         expect(node).to have_content("Rank: #{question.answers.first.ranking}")
       end
     end

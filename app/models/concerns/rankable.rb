@@ -5,23 +5,21 @@ module Rankable
 
   included do
     has_many :ranks, dependent: :destroy, as: :rankable
-
-    before_save :prevent_tampering
   end
 
   def ranking
     ranks.sum(:value)
   end
 
-  def clear_user_ranks
-    ranks.where(author: current_user).destroy_all
+  def rank_given(user)
+    ranks.where(author: user).first
   end
 
   def process_rank(value, author)
     existing_rank = ranks.where(author: author).first
-
     if existing_rank
-      if existing_rank.value == value.to_i
+      value = prevent_tampering(value)
+      if existing_rank.value == value
         existing_rank.destroy
       else
         existing_rank.update(value: value)
@@ -33,7 +31,7 @@ module Rankable
 
   private
 
-  def prevent_tampering
-    puts 'HERE--------------------------------------------------------------------------'
+  def prevent_tampering(value)
+    value.to_i > 0 ? 1 : -1
   end
 end

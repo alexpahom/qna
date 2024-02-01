@@ -2,14 +2,27 @@ class RanksController < ApplicationController
   before_action :authenticate_user!
 
   def create
-    resource = Question.find(params[:resource_id])
     return if resource.author == current_user
     resource.process_rank(params[:value], current_user)
+
+    respond_to do |format|
+      format.json { render json: rank_info }
+    end
   end
 
   private
 
   def resource
-    params[:class].constantize
+    @resource ||= params[:class].constantize.find(params[:resource_id])
   end
+
+  def rank_info
+    {
+      ranking: resource.ranking,
+      class: resource.class.name,
+      resource_id: resource.id,
+      rank_given: resource.rank_given(current_user)&.value
+    }
+  end
+
 end
