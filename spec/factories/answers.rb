@@ -8,4 +8,10 @@ FactoryBot.define do
   trait :invalid do
     body { nil }
   end
+
+  trait :ranked do
+    after(:create) do |question|
+      create_list(:rank, 5, rankable: question)
+    end
+  end
 end

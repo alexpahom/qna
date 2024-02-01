@@ -28,5 +28,11 @@ FactoryBot.define do
         create(:link, linkable: question)
       end
     end
+
+    trait :answered_ranked do
+      after(:create) do |question|
+        create_list(:answer, 1, :ranked, question: question)
+      end
+    end
   end
 end
