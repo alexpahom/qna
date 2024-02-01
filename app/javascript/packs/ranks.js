@@ -12,7 +12,6 @@ $(document).on('turbolinks:load', function() {
     })
 
     $('.rank-wrapper').on('ajax:success', function (e) {
-        console.log('here')
         const rankInfo = e.detail[0]
         const resource = `${rankInfo.class.toLowerCase()}_${rankInfo.resource_id}`
 
