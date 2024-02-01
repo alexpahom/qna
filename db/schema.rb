@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_01_30_030013) do
+ActiveRecord::Schema.define(version: 2024_01_31_223734) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -81,6 +81,17 @@ ActiveRecord::Schema.define(version: 2024_01_30_030013) do
     t.index ["author_id"], name: "index_questions_on_author_id"
   end
 
+  create_table "ranks", force: :cascade do |t|
+    t.integer "value"
+    t.string "rankable_type"
+    t.bigint "rankable_id"
+    t.bigint "author_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["author_id"], name: "index_ranks_on_author_id"
+    t.index ["rankable_type", "rankable_id"], name: "index_ranks_on_rankable"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -108,6 +119,7 @@ ActiveRecord::Schema.define(version: 2024_01_30_030013) do
   add_foreign_key "answers", "users", column: "author_id"
   add_foreign_key "badges", "questions"
   add_foreign_key "questions", "users", column: "author_id"
+  add_foreign_key "ranks", "users", column: "author_id"
   add_foreign_key "users_badges", "badges"
   add_foreign_key "users_badges", "users"
 end

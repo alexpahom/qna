@@ -1,0 +1,15 @@
+- if current_user
+  div.rank-wrapper
+    div = button_to '+', ranks_create_path(class: resource.class.name, resource_id: resource.id, value: 1),
+            remote: true,
+            method: :post,
+            data: { format: :json },
+            disabled: resource.author == current_user
+    div
+      = 'Rank:'
+      span = resource.ranking
+    div = button_to '-', ranks_create_path(class: resource.class.name, resource_id: resource.id, value: -1),
+            remote: true,
+            method: :post,
+            data: { format: :json },
+            disabled: resource.author == current_user

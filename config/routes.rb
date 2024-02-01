@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  post 'ranks/create'
   devise_for :users
   root to: 'questions#index'
   delete 'links/:id/destroy', to: 'links#destroy', as: 'destroy_link'
