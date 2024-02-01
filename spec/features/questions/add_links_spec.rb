@@ -7,9 +7,10 @@ feature 'User can add links to question', %{
 } do
 
   let(:user) { create(:user) }
-  let(:gist_url) { 'https://gist.github.com/alexpahom/651f8504557765a1c2fb58bd75b9210b' }
+  let(:gist_url) { 'https://gist.github.com/alexpahom/1b963f43667e9f1f4ca19ee41912a302' }
+  let(:gist_hub_name) { 'Metallica' }
 
-  it 'User add links when asks questions' do
+  it 'User add links when asks questions', js: true do
     sign_in(user)
     visit new_question_path
 
@@ -21,6 +22,6 @@ feature 'User can add links to question', %{
 
     click_on 'Publish'
 
-    expect(page).to have_link 'My gist', href: gist_url
+    expect(page).to have_content gist_hub_name
   end
 end

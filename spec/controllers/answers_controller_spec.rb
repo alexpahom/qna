@@ -42,15 +42,20 @@ RSpec.describe AnswersController, type: :controller do
     before { login(user) }
 
     context 'with valid attributes' do
-      let(:answer_params) { { question_id: question, answer: attributes_for(:answer) } }
+      let(:answer_params) { { question_id: question.id, answer: attributes_for(:answer) } }
 
       it 'saves new answer in db' do
         expect { post :create, params: { **answer_params }, xhr: true }.to change(Answer, :count).by(1)
       end
 
-      it 'redirects to show' do
+      it 'redirects to render JSON' do
         post :create, params: { question_id: question.id, **answer_params }, xhr: true
-        expect(response).to render_template(:create)
+        body = nil
+        expect { body = JSON.parse(response.body) }.not_to raise_exception
+        expect(body).to include({
+                                  "body" => answer_params[:answer][:body],
+                                  "question_id" => question.id
+                                })
       end
     end
 
@@ -63,7 +68,10 @@ RSpec.describe AnswersController, type: :controller do
 
       it 're-renders new' do
         post :create, params: { question_id: question.id, **answer_params }, xhr: true
-        expect(response).to render_template(:create)
+        body = nil
+        expect { body = JSON.parse(response.body) }.not_to raise_exception
+        expect(body&.first).to include('can\'t be blank')
+        expect(response).to have_http_status(:unprocessable_entity)
       end
     end
   end

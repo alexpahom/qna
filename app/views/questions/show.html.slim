@@ -4,6 +4,11 @@
   .col-6
     h1= @question.title
     p= @question.body
+  .col-2.badges
+    - if @question.badge
+      p= 'Rewarded with:'
+      p= @question.badge.description
+      = image_tag(url_for(@question.badge.image), size: '40x40')
 
 - if @question.files.attached?
   - @question.files.each do |file|

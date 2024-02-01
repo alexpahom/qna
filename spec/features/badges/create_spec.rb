@@ -16,10 +16,10 @@ describe 'User can add badge to question', %{
     fill_in 'Title', with: 'test title'
     fill_in 'Body', with: 'test body'
     fill_in 'Description', with: description
-    attach_file 'Badge Image', "#{Rails.root.join('spec/rails_helper.rb')}"
+    attach_file 'Attach the image', "#{Rails.root.join('spec/rails_helper.rb')}"
 
     click_on 'Publish'
-    within('#reward') do |reward_section|
+    within('.badges') do |reward_section|
       expect(reward_section).to have_content description
       expect(reward_section).to have_css('img[src$="rails_helper.rb"]')
     end

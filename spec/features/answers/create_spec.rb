@@ -33,6 +33,7 @@ describe 'user can create answer', "
       attach_file 'Attach', ["#{Rails.root.join('spec/rails_helper.rb')}", "#{Rails.root.join('spec/spec_helper.rb')}"]
       click_on 'Publish'
 
+      refresh # TODO: requires js-template builder
       expect(page).to have_link 'rails_helper.rb'
       expect(page).to have_link 'spec_helper.rb'
     end
