@@ -1,7 +1,7 @@
 = render 'shared/errors', resource: @answer
 
 - @answer ||= Answer.new
-= form_with model: [@question, @answer], local: false, class: 'my-5', id: 'new_answer' do |f|
+= form_with model: [@question, @answer], local: false, class: 'my-5', id: 'new_answer', data: { type: :json } do |f|
   .mb-3
     = f.label :body, 'Answer', class: 'form-label'
     = f.text_field :body, name: 'answer[body]', class: 'form-control'

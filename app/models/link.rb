@@ -21,6 +21,7 @@ class Link < ApplicationRecord
   private
 
   def append_scheme
-    url.prepend('https://') unless url.match? /^(http|https):\/\//
+    return unless url
+    url.prepend('https://') unless url.match?(/^(http|https):\/\//)
   end
 end

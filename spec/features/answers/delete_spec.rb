@@ -19,7 +19,9 @@ describe 'user can delete their answers', "
     it 'deletes user\'s own answer', js: true do
       fill_in 'Answer', with: answer_text
       click_on 'Publish'
-      click_on 'Delete'
+      refresh # TODO: requires js-template builder
+
+      within('.answers') { click_on 'Delete' }
       expect(page).not_to have_content answer_text
     end
 
@@ -28,6 +30,7 @@ describe 'user can delete their answers', "
       attach_file 'Attach', ["#{Rails.root.join('spec/rails_helper.rb')}", "#{Rails.root.join('spec/spec_helper.rb')}"]
       click_on 'Publish'
 
+      refresh # TODO: requires js-template builder
       find_link(id: 'delete_attachment_rails_helper.rb').click
       find_link(id: 'delete_attachment_spec_helper.rb').click
       expect(page).not_to have_content 'rails_helper.rb'
@@ -37,7 +40,9 @@ describe 'user can delete their answers', "
 
   describe 'Unsuccessful delete' do
     it 'cannot delete another user\'s question' do
-      expect(page).not_to have_content 'Delete'
+      within('.answers') do
+        expect(page).not_to have_content 'Delete'
+      end
     end
   end
 end

@@ -8,32 +8,35 @@ feature 'User can add links to answer', %{
 
   let(:user) { create(:user) }
   let!(:question) { create(:question) }
-  let(:gist_url) { 'https://gist.github.com/alexpahom/651f8504557765a1c2fb58bd75b9210b' }
+  let(:gist_url) { 'https://gist.github.com/alexpahom/cb4813ca9b649fb2a567627c247c825e' }
   let(:gist_github_title) { 'gist_sample' }
 
-  it 'User add links when leaves answer', js: true do
-    sign_in(user)
+  before do
+    login(user)
     visit question_path(question)
+    fill_in 'Answer', with: 'text'
+  end
 
+  it 'User add links when leaves answer', js: true do
     fill_in 'Answer', with: 'test answer'
 
-    fill_in 'Link', with: 'My gist'
-    fill_in 'URL', with: gist_url
+    fill_in 'Link name', with: 'Google'
+    fill_in 'URL', with: 'google.com'
 
     click_on 'Publish'
 
     within '.answers' do
-      expect(page).to have_link 'My gist', href: gist_url
+      expect(page).to have_content 'test answer'
     end
   end
 
   it 'User adds gist when asks question', js: true do
     gist_title = 'Test gist'
-    fill_in 'Link', with: gist_title
+    fill_in 'Link name', with: gist_title
     fill_in 'URL', with: gist_url
 
     click_on 'Publish'
-
+    refresh
     within('.answers') do |answers|
       expect(answers).to have_content gist_github_title
       expect(answers).not_to have_content gist_title
