@@ -1,10 +1,5 @@
-/ p =answer.body
-/ - if answer.author == current_user
-/   = button_to 'Delete', answer_path(answer), method: :delete, confirm: 'Are you sure ?'
-
-
 div(id="answer_#{answer.id}")
-  .row.border-bottom.my-3
+  .row.border-bottom.my-3.p-3
     .col-2
       = render 'shared/rankings', resource: answer
     .col-md-5

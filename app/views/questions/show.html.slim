@@ -4,18 +4,18 @@
   .col-6
     h1= @question.title
     p= @question.body
+    - if @question.files.attached?
+      - @question.files.each do |file|
+        div(id="attachment_#{file.id}")
+          = link_to file.filename.to_s, url_for(file), id: file.signed_id, class: 'px-2'
+          = link_to 'X', purge_attachment_url(file), method: :delete, remote: true,
+                  id: "delete_attachment_#{file.filename.to_s}"
   .col-2.badges
     - if @question.badge
       p= 'Rewarded with:'
       p= @question.badge.description
       = image_tag(url_for(@question.badge.image), size: '40x40')
 
-- if @question.files.attached?
-  - @question.files.each do |file|
-    div(id="attachment_#{file.id}")
-      p= link_to file.filename.to_s, url_for(file), id: file.signed_id
-      p= link_to 'X', purge_attachment_url(file), method: :delete, remote: true,
-              id: "delete_attachment_#{file.filename.to_s}"
 .links
   ul
     - @question.links.each do |link|
@@ -35,7 +35,7 @@
   = render 'shared/errors', resource: @answer
 
 p(class="fs-4") Answers
-.answers
+.answers.ms-5
   = render @question.answers.order(best: :desc)
 
 = render 'answers/form'

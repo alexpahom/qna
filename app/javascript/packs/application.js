@@ -7,13 +7,14 @@ require("@popperjs/core")
 global.$ = require("jquery")
 require("@nathanvda/cocoon")
 import Rails from "@rails/ujs"
-import { createConsumer}  from "@rails/actioncable";
+import {createConsumer} from "@rails/actioncable";
+
 export default createConsumer()
-import { GistClient } from "gist-client"
+import {GistClient} from "gist-client"
 import Turbolinks from "turbolinks"
 import * as ActiveStorage from "@rails/activestorage"
 import 'bootstrap'
-import { Tooltip, Popover } from "bootstrap"
+import {Tooltip, Popover} from "bootstrap"
 import "channels"
 import './ranks'
 
@@ -28,12 +29,12 @@ ActiveStorage.start()
 document.addEventListener("turbolinks:load", () => {
     // Both of these are from the Bootstrap 5 docs
     var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-    var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
         return new Tooltip(tooltipTriggerEl)
     })
 
     var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
-    var popoverList = popoverTriggerList.map(function(popoverTriggerEl) {
+    var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
         return new Popover(popoverTriggerEl)
     })
 })
@@ -43,7 +44,16 @@ App.cable = createConsumer()
 
 App.cable.subscriptions.create('QuestionsChannel', {
     connected: function () {
-        this.perform('follow')
+        if (window.location.pathname === '/questions')
+            this.perform('follow')
     },
     received: (data) => $('#questions').append(data)
+})
+
+App.cable.subscriptions.create('AnswersChannel', {
+    connected: function () {
+        if (/\/questions\/(\d)/.test(window.location.pathname))
+            this.perform('follow')
+    },
+    received: (data) => $('.answers').append(data)
 })

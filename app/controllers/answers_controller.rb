@@ -3,6 +3,8 @@ class AnswersController < ApplicationController
   before_action :set_question, only: %i[show new create]
   before_action :set_answer, only: %i[show edit update destroy]
 
+  after_action :publish_answer, only: :create
+
   def create
     @answer = @question.answers.build(**answer_params, author: current_user)
 
@@ -39,5 +41,16 @@ class AnswersController < ApplicationController
 
   def answer_params
     params.require(:answer).permit(:body, :best, files: [], links_attributes: [:name, :url, :id, :_destroy])
+  end
+
+  def publish_answer
+    return unless @answer.errors.empty?
+    ActionCable.server.broadcast(
+      'answers',
+      ApplicationController.render(
+        partial: 'answers/answer',
+        locals: { answer: @answer, current_user: nil }
+      )
+    )
   end
 end
