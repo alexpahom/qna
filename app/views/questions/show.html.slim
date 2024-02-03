@@ -1,4 +1,4 @@
-.row
+.row.question(id="question_#{@question.id}")
   .col-2
     = render 'shared/rankings', resource: @question, user: current_user
   .col-6
@@ -16,20 +16,22 @@
       p= @question.badge.description
       = image_tag(url_for(@question.badge.image), size: '40x40')
 
-.links
-  ul
-    - @question.links.each do |link|
-      li(id="link_#{link.id}")
-        .row
-          .gist-wrapper.col-6
-            - if link.gist?
-              = render 'shared/gist_uploader', link: link
-            - else
-              = link_to link.name, link.url, target: '_blank'
+  .links
+    ul
+      - @question.links.each do |link|
+        li(id="link_#{link.id}")
+          .row
+            .gist-wrapper.col-6
+              - if link.gist?
+                = render 'shared/gist_uploader', link: link
+              - else
+                = link_to link.name, link.url, target: '_blank'
 
-          - if @question.author == current_user
-            .col-3
-              = link_to 'X', destroy_link_url(link), method: :delete, remote: true, class: 'btn my-2'
+            - if @question.author == current_user
+              .col-3
+                = link_to 'X', destroy_link_url(link), method: :delete, remote: true, class: 'btn my-2'
+
+  = render 'comments/comments', resource: @question, user: current_user
 
 .answer-errors
   = render 'shared/errors', resource: @answer

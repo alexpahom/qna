@@ -1,0 +1,2 @@
+$("#comment_<%= @resource.class.name.downcase %>_<%= @resource.id %> .comment-form")
+    .html("<%= j render 'comments/form', resource: @resource %>")

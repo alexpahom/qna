@@ -55,5 +55,27 @@ App.cable.subscriptions.create('AnswersChannel', {
         if (/\/questions\/(\d)/.test(window.location.pathname))
             this.perform('follow')
     },
-    received: (data) => $('.answers').append(data)
+    received: ([data]) => {
+        if (data.status === 'ok') {
+            $('#new_answer').trigger('reset')
+            $('.answers').append(data.body)
+        } else {
+            $('.answer-errors').html(data.body)
+        }
+    }
+})
+
+App.cable.subscriptions.create('CommentsChannel', {
+    connected: function () {
+        if (/\/questions\/(\d)/.test(window.location.pathname))
+            this.perform('follow')
+    },
+    received: (data) => {
+        let commentElement = $(`#${data.resource_class}_${data.resource_id}`).find('.comments-wrapper')
+        if (data.status === 'ok') {
+            commentElement.prepend(data.body)
+        } else {
+            $(commentElement).find('.comment-errors').html(data.body)
+        }
+    }
 })

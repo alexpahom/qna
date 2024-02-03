@@ -60,3 +60,5 @@ div(id="answer_#{answer.id}")
             = f.submit 'Update', class: 'btn btn-primary'
             = button_to 'Cancel', edit_answer_path(answer), method: :get, remote: true, id: "cancel_#{answer.id}",
                     class: 'btn btn-secondary mx-3', style: 'display:none'
+
+    = render 'comments/comments', resource: answer, user: user

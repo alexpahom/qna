@@ -13,23 +13,26 @@ describe 'User can create a comment for question/answer', %{
 
     before do
       login(user)
-      visit questions_path(question)
+      visit question_path(question)
     end
 
     it 'Create comment for question' do
       test_comment = 'Test comment'
 
-      click_on 'Comment'
-      fill 'Content', with: test_comment
-      click_on 'Add'
+      within('.question') do |node|
+        click_on 'Comment'
+        fill_in 'Content', with: test_comment
+        click_on 'Add'
 
-      expect(page).to have_content test_comment
+        expect(node).to have_content test_comment
+      end
     end
 
     it 'Create comment for answer' do
       test_comment = 'Test comment answer'
       within(:xpath, first_answer_xpath) do |node|
-        fill 'Content', with: test_comment
+        click_on 'Comment'
+        fill_in 'Content', with: test_comment
         click_on 'Add'
 
         expect(node).to have_content test_comment
@@ -39,11 +42,12 @@ describe 'User can create a comment for question/answer', %{
 
   context 'Unauthenticated user' do
 
-    before { visit questions_path(question) }
+    before { visit question_path(question) }
 
     it 'Cannot create comment for question' do
-
-      expect(page).not_to have_selector('.add-comment')
+      within('.question') do |node|
+        expect(node).not_to have_selector('.add-comment')
+      end
     end
 
     it 'cannot create comment for answer' do

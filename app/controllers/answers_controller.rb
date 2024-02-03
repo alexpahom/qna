@@ -44,13 +44,22 @@ class AnswersController < ApplicationController
   end
 
   def publish_answer
-    return unless @answer.errors.empty?
+    params =
+      if @answer.errors.empty?
+        {
+          status: :ok,
+          render_params: { partial: 'answers/answer', locals: { answer: @answer, user: nil } }
+        }
+      else
+        {
+          status: :unprocessable_entity,
+          render_params: { partial: 'shared/errors', locals: { resource: @answer } }
+        }
+      end
+
     ActionCable.server.broadcast(
       'answers',
-      ApplicationController.render(
-        partial: 'answers/answer',
-        locals: { answer: @answer, user: nil }
-      )
+      { status: params[:status], body: ApplicationController.render(params[:render_params]) }
     )
   end
 end
