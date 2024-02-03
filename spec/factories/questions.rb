@@ -28,5 +28,11 @@ FactoryBot.define do
         create(:link, linkable: question)
       end
     end
+
+    trait :commented do
+      after(:create) do |question|
+        create_list(:comment, 2, commentable: question)
+      end
+    end
   end
 end

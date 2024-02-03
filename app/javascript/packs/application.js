@@ -7,14 +7,16 @@ require("@popperjs/core")
 global.$ = require("jquery")
 require("@nathanvda/cocoon")
 import Rails from "@rails/ujs"
-import { GistClient } from "gist-client"
+import {createConsumer} from "@rails/actioncable";
+import {GistClient} from "gist-client"
 import Turbolinks from "turbolinks"
 import * as ActiveStorage from "@rails/activestorage"
 import 'bootstrap'
-import { Tooltip, Popover } from "bootstrap"
+import {Tooltip, Popover} from "bootstrap"
 import "channels"
 import './ranks'
 
+export default createConsumer()
 require("../stylesheets/application.scss")
 
 window.GistClient = new GistClient()
@@ -26,12 +28,59 @@ ActiveStorage.start()
 document.addEventListener("turbolinks:load", () => {
     // Both of these are from the Bootstrap 5 docs
     var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-    var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
         return new Tooltip(tooltipTriggerEl)
     })
 
     var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
-    var popoverList = popoverTriggerList.map(function(popoverTriggerEl) {
+    var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
         return new Popover(popoverTriggerEl)
     })
+})
+
+let App = App || {}
+App.cable = createConsumer()
+
+App.cable.subscriptions.create('QuestionsChannel', {
+    connected: function () {
+        if (window.location.pathname === '/questions')
+            this.perform('follow')
+    },
+    received: (data) => $('#questions').append(data)
+})
+
+App.cable.subscriptions.create('AnswersChannel', {
+    connected: function () {
+        const path = window.location.pathname
+        if (/\/questions\/(\d)/.test(path)) {
+            const questionId = path.match(/\d+/)[0]
+            this.perform('follow', {question_id: parseInt(questionId)})
+        }
+    },
+    received: (data) => {
+        if (data.status === 'ok') {
+            $('#new_answer').trigger('reset')
+            $('.answers').append(data.body)
+        } else {
+            $('.answer-errors').html(data.body)
+        }
+    }
+})
+
+App.cable.subscriptions.create('CommentsChannel', {
+    connected: function () {
+        const path = window.location.pathname
+        if (/\/questions\/(\d)/.test(path)) {
+            const questionId = path.match(/\d+/)[0]
+            this.perform('follow', {question_id: parseInt(questionId)})
+        }
+    },
+    received: (data) => {
+        let commentElement = $(`#${data.resource_class}_${data.resource_id}`).find('.comments-wrapper')
+        if (data.status === 'ok') {
+            commentElement.prepend(data.body)
+        } else {
+            $(commentElement).find('.comment-errors').html(data.body)
+        }
+    }
 })

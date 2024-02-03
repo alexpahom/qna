@@ -40,7 +40,7 @@ describe 'user can vote for question/answer', %{
     end
 
     it 'Can vote for', js: true do
-      within(:xpath, first_answer_xpath) do |node|
+      within(:xpath, first_answer_rank_xpath) do |node|
         initial_rank = first_answer_ranking
         click_on '+'
         expect(node).to have_content("Rank: #{initial_rank + 1}")
@@ -48,7 +48,7 @@ describe 'user can vote for question/answer', %{
     end
 
     it 'Can vote against', js: true do
-      within(:xpath, first_answer_xpath) do |node|
+      within(:xpath, first_answer_rank_xpath) do |node|
         initial_rank = first_answer_ranking
         click_on '-'
         expect(node).to have_content("Rank: #{initial_rank - 1}")

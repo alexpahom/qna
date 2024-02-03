@@ -45,4 +45,27 @@ describe 'user can create question', "
 
     expect(page).not_to have_content 'Ask question'
   end
+
+  context 'multiple sessions' do
+    it 'Question appears on another user\'s page', js: true do
+      Capybara.using_session(:guest) do
+        visit questions_path
+      end
+
+      Capybara.using_session(:user) do
+        sign_in(user)
+        visit new_question_path
+        fill_in 'Title', with: 'Test question'
+        fill_in 'Body', with: 'Lorem ipsum dolor'
+        click_on 'Publish'
+        expect(page).to have_content 'Test question'
+        expect(page).to have_content 'Lorem ipsum dolor'
+      end
+
+      Capybara.using_session(:guest) do
+        expect(page).to have_content 'Test question'
+        expect(page).to have_content 'Lorem ipsum dolor'
+      end
+    end
+  end
 end

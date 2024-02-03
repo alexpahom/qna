@@ -3,6 +3,8 @@ class AnswersController < ApplicationController
   before_action :set_question, only: %i[show new create]
   before_action :set_answer, only: %i[show edit update destroy]
 
+  after_action :publish_answer, only: :create
+
   def create
     @answer = @question.answers.build(**answer_params, author: current_user)
 
@@ -39,5 +41,25 @@ class AnswersController < ApplicationController
 
   def answer_params
     params.require(:answer).permit(:body, :best, files: [], links_attributes: [:name, :url, :id, :_destroy])
+  end
+
+  def publish_answer
+    params =
+      if @answer.errors.empty?
+        {
+          status: :ok,
+          render_params: { partial: 'answers/answer', locals: { answer: @answer, user: nil } }
+        }
+      else
+        {
+          status: :unprocessable_entity,
+          render_params: { partial: 'shared/errors', locals: { resource: @answer } }
+        }
+      end
+
+    ActionCable.server.broadcast(
+      "question_#{@question.id}",
+      { status: params[:status], body: ApplicationController.render(params[:render_params]) }
+    )
   end
 end

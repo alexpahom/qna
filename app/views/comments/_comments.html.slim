@@ -1,0 +1,12 @@
+.comments-wrapper.my-3(style="margin-left: 30%")
+  .comment-errors
+  - resource.comments.each do |comment|
+    = render comment, comment: comment, user: user
+
+  .new-comment(id="comment_#{resource.class.name.downcase}_#{resource.id}")
+    .comment-form
+
+    - if user
+      .comment-btn
+        = link_to 'Comment', new_comment_path(class: resource.class.name, resource_id: resource.id),
+                method: :get, remote: true, id: "comment_#{resource.id}", class: 'add-comment'

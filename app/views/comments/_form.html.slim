@@ -1,0 +1,7 @@
+div(id="new_comment_#{resource.id}")
+  = form_with url: comments_create_url(class: resource.class.name, resource_id: resource.id),
+          method: :post,
+          local: false do |f|
+    = f.label :body, 'Content'
+    = f.text_area :body
+    = f.submit 'Add'

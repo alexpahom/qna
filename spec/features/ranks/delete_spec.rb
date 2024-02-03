@@ -40,7 +40,7 @@ describe 'user can reverse vote for question/answer', %{
     end
 
     it 'Can reverse vote for', js: true do
-      within(:xpath, first_answer_xpath) do
+      within(:xpath, first_answer_rank_xpath) do
         init = question.answers.first.ranking
         click_on '+'
         click_on '+'
@@ -50,7 +50,7 @@ describe 'user can reverse vote for question/answer', %{
     end
 
     it 'Can reverse vote against', js: true do
-      within(:xpath, first_answer_xpath) do
+      within(:xpath, first_answer_rank_xpath) do
         init = question.answers.first.ranking
         click_on '-'
         click_on '-'

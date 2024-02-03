@@ -2,6 +2,8 @@ class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
   before_action :get_question, only: %i[show edit update destroy]
 
+  after_action :publish_question, only: :create
+
   def index
     @questions = Question.all
   end
@@ -46,5 +48,16 @@ class QuestionsController < ApplicationController
     params.require(:question).permit(:title, :body, files: [],
                                      links_attributes: [:name, :url, :id, :_destroy],
                                      badge_attributes: [:description, :image])
+  end
+
+  def publish_question
+    return unless @question.errors.empty?
+    ActionCable.server.broadcast(
+      'questions',
+      ApplicationController.render(
+        partial: 'questions/question',
+        locals: { question: @question, current_user: nil }
+      )
+    )
   end
 end

@@ -7,7 +7,12 @@ Rails.application.routes.draw do
   delete 'attachments/:id/purge', to: 'attachments#purge', as: 'purge_attachment'
 
   resources :badges, only: :index
+  resources :comments, only: %i[new destroy]
+  post 'comments/create'
+
   resources :questions do
     resources :answers, shallow: true, except: %i[new index]
   end
+
+  mount ActionCable.server => '/cable'
 end
