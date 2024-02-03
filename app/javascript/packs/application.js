@@ -8,8 +8,6 @@ global.$ = require("jquery")
 require("@nathanvda/cocoon")
 import Rails from "@rails/ujs"
 import {createConsumer} from "@rails/actioncable";
-
-export default createConsumer()
 import {GistClient} from "gist-client"
 import Turbolinks from "turbolinks"
 import * as ActiveStorage from "@rails/activestorage"
@@ -18,6 +16,7 @@ import {Tooltip, Popover} from "bootstrap"
 import "channels"
 import './ranks'
 
+export default createConsumer()
 require("../stylesheets/application.scss")
 
 window.GistClient = new GistClient()
@@ -55,7 +54,7 @@ App.cable.subscriptions.create('AnswersChannel', {
         if (/\/questions\/(\d)/.test(window.location.pathname))
             this.perform('follow')
     },
-    received: ([data]) => {
+    received: (data) => {
         if (data.status === 'ok') {
             $('#new_answer').trigger('reset')
             $('.answers').append(data.body)
