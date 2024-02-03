@@ -1,6 +1,7 @@
 class Answer < ApplicationRecord
   include Rankable
   include Attachable
+  include Commentable
 
   before_update :assign_best
 

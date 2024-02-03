@@ -1,6 +1,7 @@
 class Question < ApplicationRecord
   include Rankable
   include Attachable
+  include Commentable
 
   has_many :answers, dependent: :destroy
   belongs_to :author, class_name: 'User'
