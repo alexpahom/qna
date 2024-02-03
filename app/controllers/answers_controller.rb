@@ -58,7 +58,7 @@ class AnswersController < ApplicationController
       end
 
     ActionCable.server.broadcast(
-      'answers',
+      "question_#{@question.id}",
       { status: params[:status], body: ApplicationController.render(params[:render_params]) }
     )
   end

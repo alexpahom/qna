@@ -51,8 +51,11 @@ App.cable.subscriptions.create('QuestionsChannel', {
 
 App.cable.subscriptions.create('AnswersChannel', {
     connected: function () {
-        if (/\/questions\/(\d)/.test(window.location.pathname))
-            this.perform('follow')
+        const path = window.location.pathname
+        if (/\/questions\/(\d)/.test(path)) {
+            const questionId = path.match(/\d+/)[0]
+            this.perform('follow', {question_id: parseInt(questionId)})
+        }
     },
     received: (data) => {
         if (data.status === 'ok') {
@@ -66,8 +69,11 @@ App.cable.subscriptions.create('AnswersChannel', {
 
 App.cable.subscriptions.create('CommentsChannel', {
     connected: function () {
-        if (/\/questions\/(\d)/.test(window.location.pathname))
-            this.perform('follow')
+        const path = window.location.pathname
+        if (/\/questions\/(\d)/.test(path)) {
+            const questionId = path.match(/\d+/)[0]
+            this.perform('follow', {question_id: parseInt(questionId)})
+        }
     },
     received: (data) => {
         let commentElement = $(`#${data.resource_class}_${data.resource_id}`).find('.comments-wrapper')

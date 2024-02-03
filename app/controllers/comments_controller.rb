@@ -36,7 +36,7 @@ class CommentsController < ApplicationController
       end
 
     ActionCable.server.broadcast(
-      'comments',
+      "comments_#{question.id}",
       {
         status: params[:status],
         body: ApplicationController.render(params[:render_params]),
@@ -44,5 +44,9 @@ class CommentsController < ApplicationController
         resource_id: @comment.commentable.id
       }
     )
+  end
+
+  def question
+    @resource.instance_of?(Question) ? @resource : @resource.question
   end
 end
