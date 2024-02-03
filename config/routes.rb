@@ -10,4 +10,6 @@ Rails.application.routes.draw do
   resources :questions do
     resources :answers, shallow: true, except: %i[new index]
   end
+
+  mount ActionCable.server => '/cable'
 end

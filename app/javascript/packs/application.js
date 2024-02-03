@@ -7,6 +7,8 @@ require("@popperjs/core")
 global.$ = require("jquery")
 require("@nathanvda/cocoon")
 import Rails from "@rails/ujs"
+import { createConsumer}  from "@rails/actioncable";
+export default createConsumer()
 import { GistClient } from "gist-client"
 import Turbolinks from "turbolinks"
 import * as ActiveStorage from "@rails/activestorage"
@@ -34,4 +36,14 @@ document.addEventListener("turbolinks:load", () => {
     var popoverList = popoverTriggerList.map(function(popoverTriggerEl) {
         return new Popover(popoverTriggerEl)
     })
+})
+
+let App = App || {}
+App.cable = createConsumer()
+
+App.cable.subscriptions.create('QuestionsChannel', {
+    connected: function () {
+        this.perform('follow')
+    },
+    received: (data) => $('#questions').append(data)
 })

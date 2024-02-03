@@ -31,7 +31,8 @@ rescue ActiveRecord::PendingMigrationError => e
   abort e.to_s.strip
 end
 RSpec.configure do |config|
-  Capybara.javascript_driver = :selenium_chrome
+  Capybara.javascript_driver = :selenium_chrome_headless
+  Capybara.default_driver = :selenium_chrome_headless
 
   config.include FactoryBot::Syntax::Methods
   config.include ControllerHelper, type: :controller

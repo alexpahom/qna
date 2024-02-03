@@ -1,4 +1,4 @@
-ul = render @questions
+ul#questions = render @questions
 
 - if current_user.present?
   p= link_to 'New Question', new_question_path, class: 'btn btn-primary'
