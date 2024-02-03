@@ -1,6 +1,6 @@
 .row
   .col-2
-    = render 'shared/rankings', resource: @question
+    = render 'shared/rankings', resource: @question, user: current_user
   .col-6
     h1= @question.title
     p= @question.body
@@ -36,6 +36,6 @@
 
 p(class="fs-4") Answers
 .answers.ms-5
-  = render @question.answers.order(best: :desc)
+  = render @question.answers.order(best: :desc), user: current_user
 
 = render 'answers/form'

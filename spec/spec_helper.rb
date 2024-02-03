@@ -41,7 +41,7 @@ RSpec.configure do |config|
     if scenario.exception
       test_name = scenario.description
       context = scenario.example_group.description
-      filename = "[#{context}]-#{test_name}.jpg"
+      filename = "[#{context}]-#{test_name}.png"
       save_screenshot(filename)
     end
   end

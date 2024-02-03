@@ -49,7 +49,7 @@ class AnswersController < ApplicationController
       'answers',
       ApplicationController.render(
         partial: 'answers/answer',
-        locals: { answer: @answer, current_user: nil }
+        locals: { answer: @answer, user: nil }
       )
     )
   end

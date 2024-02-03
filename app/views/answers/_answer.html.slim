@@ -1,7 +1,7 @@
 div(id="answer_#{answer.id}")
   .row.border-bottom.my-3.p-3
     .col-2
-      = render 'shared/rankings', resource: answer
+      = render 'shared/rankings', resource: answer, user: user
     .col-md-5
       - if answer.best?
         = 'BEST ANSWER'
@@ -10,7 +10,7 @@ div(id="answer_#{answer.id}")
       - answer.files.each do |file|
         div(id="attachment_#{file.id}")
           = link_to file.filename.to_s, url_for(file), id: file.signed_id, class: 'mx-3'
-          - if (answer.author == current_user) || (answer.question.author == current_user)
+          - if (answer.author == user) || (answer.question.author == user)
             = link_to 'X', purge_attachment_url(file), method: :delete, remote: true,
                     id: "delete_attachment_#{file.filename.to_s}"
 
@@ -25,15 +25,15 @@ div(id="answer_#{answer.id}")
                   - else
                     = link_to link.name, link.url, target: '_blank'
 
-                - if answer.author == current_user
+                - if answer.author == user
                   .col-3
                     = link_to 'X', destroy_link_url(link), method: :delete, remote: true, class: 'btn my-2'
 
-      - if answer.question.author == current_user && !answer.best?
+      - if answer.question.author == user && !answer.best?
         = form_with model: answer, method: :put, remote: false do |f|
           = f.check_box :best, checked: true, hidden: true
           = f.submit 'Set as Best Answer', class: 'btn btn-success mx-2'
-    - if answer.author == current_user
+    - if answer.author == user
       .col-md-3
         .panel(class="btn-toolbar d-flex justify-content-center align-content-center")
           = button_to 'Edit', edit_answer_path(answer), method: :get, remote: true, id: "edit_#{answer.id}", class: 'btn btn-primary mx-3'

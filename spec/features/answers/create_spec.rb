@@ -50,4 +50,26 @@ describe 'user can create answer', "
       expect(page).not_to have_content 'Publish'
     end
   end
+
+  describe 'Realtime answer rendering' do
+    it '2nd user can see answer is created' do
+      Capybara.using_session(:guest) do
+        visit question_path(question)
+      end
+
+      response_text = 'Test Answer'
+
+      Capybara.using_session(:user) do
+        login(user)
+        visit question_path(question)
+        fill_in 'Answer', with: response_text
+        click_on 'Publish'
+        expect(page).to have_content response_text
+      end
+
+      Capybara.using_session(:guest) do
+        expect(page).to have_content response_text
+      end
+    end
+  end
 end
