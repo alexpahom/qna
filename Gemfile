@@ -30,6 +30,8 @@ gem "net-http"
 gem 'bootstrap'
 gem 'cocoon'
 gem "google-cloud-storage", "~> 1.11", require: false
+gem 'omniauth'
+gem 'omniauth-github'
 gem 'octokit'
 
 # Reduces boot times through caching; required in config/boot.rb

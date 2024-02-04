@@ -1,8 +1,9 @@
 Rails.application.routes.draw do
 
-  post 'ranks/create'
-  devise_for :users
   root to: 'questions#index'
+
+  devise_for :users, controllers: { omniauth_callbacks: 'oauth_callbacks' }
+  post 'ranks/create'
   delete 'links/:id/destroy', to: 'links#destroy', as: 'destroy_link'
   delete 'attachments/:id/purge', to: 'attachments#purge', as: 'purge_attachment'
 
