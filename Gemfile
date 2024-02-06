@@ -31,6 +31,7 @@ gem 'devise'
 gem "google-cloud-storage", "~> 1.11", require: false
 gem 'omniauth'
 gem 'omniauth-github'
+gem 'omniauth-google-oauth2'
 gem 'omniauth-rails_csrf_protection'
 gem 'octokit'
 gem 'slim-rails'
