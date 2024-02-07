@@ -62,7 +62,6 @@ Rails.application.configure do
   config.assets.quiet = true
 
   config.action_mailer.delivery_method = :letter_opener
-
   # Raises error for missing translations.
   # config.i18n.raise_on_missing_translations = true
 
