@@ -6,7 +6,5 @@ p Set up your account
   p
     = f.label :email, class: 'form-label'
     = f.email_field :email, class: 'form-control'
-    = f.text_field :uid, value: params[:uid], class: 'invisible'
-    = f.text_field :provider, value: params[:provider], class: 'invisible'
 
   p= f.submit 'Submit', class: 'btn btn-primary'

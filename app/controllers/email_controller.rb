@@ -1,12 +1,18 @@
 class EmailController < ApplicationController
   def new
-    @user = User.new
+    if session[:auth]
+      @user = User.new
+    else
+      redirect_to new_user_session_path, alert: 'Error'
+    end
   end
 
   def create
     password = Devise.friendly_token[0, 20]
     @user = User.create(email: params[:email], password: password, password_confirmation: password)
-    auth = OmniAuth::AuthHash.new(provider: params[:provider], uid: params[:uid], info: { email: @user.email })
+    auth = OmniAuth::AuthHash.new(
+      provider: session['auth']['provider'], uid: session['auth']['uid'], info: { email: @user.email }
+    )
 
     @user.create_authorization(auth) if @user.valid?
 
@@ -20,6 +26,6 @@ class EmailController < ApplicationController
   private
 
   def email_params
-    params.require(:email).permit([:email, :uid, :provider])
+    params.require(:email).permit([:email])
   end
 end
