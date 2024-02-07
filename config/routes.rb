@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  get 'email/new'
+  post 'email/create'
   root to: 'questions#index'
 
   devise_for :users, controllers: { omniauth_callbacks: 'oauth_callbacks' }
