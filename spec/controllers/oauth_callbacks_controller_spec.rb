@@ -58,7 +58,7 @@ RSpec.describe OauthCallbacksController, type: :controller do
       let(:user) { Services::FindForOauth.new(oauth_data).call }
 
       before do
-        @request.env['omniauth.auth'] = auth_hash(:vkontakte, 'test@email.com')
+        @request.env['omniauth.auth'] = auth_hash(:google, 'test@email.com')
         get :google_oauth2
       end
 
