@@ -13,7 +13,6 @@ class OauthCallbacksController < Devise::OmniauthCallbacksController
 
   def oauth(provider)
     auth_params = request.env['omniauth.auth']
-
     return if handle_no_email(auth_params)
 
     @user = User.find_for_oauth(auth_params)

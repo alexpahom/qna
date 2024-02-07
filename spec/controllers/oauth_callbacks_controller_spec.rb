@@ -7,8 +7,7 @@ RSpec.describe OauthCallbacksController, type: :controller do
 
   describe 'Github' do
 
-    let(:oauth_data) { OmniAuth::AuthHash.new(provider: 'facebook', uid: '123456', info: { email: 'test@email.com' }) }
-    # let(:oauth_data) { { 'provider' => 'github', 'uid' => 123 } }
+    let(:oauth_data) { OmniAuth::AuthHash.new(provider: 'google', uid: '123456', info: { email: 'test@email.com' }) }
 
     it 'find user from oauth data' do
       allow(request.env).to receive(:[]).and_call_original
@@ -47,6 +46,53 @@ RSpec.describe OauthCallbacksController, type: :controller do
 
       it 'does not login' do
         expect(subject.current_user).to_not be
+      end
+    end
+  end
+
+  describe 'Google' do
+    let(:oauth_data) { OmniAuth::AuthHash.new(provider: 'google', uid: '123456', info: { email: 'test@email.com' }) }
+
+    context 'user exists' do
+
+      let(:user) { Services::FindForOauth.new(oauth_data).call }
+
+      before do
+        @request.env['omniauth.auth'] = auth_hash(:vkontakte, 'test@email.com')
+        get :google_oauth2
+      end
+
+      it 'logs user in' do
+        expect(subject.current_user).to eq(user)
+      end
+
+      it 'redirects to root' do
+        expect(response).to redirect_to root_path
+      end
+    end
+
+    context 'user does not exist' do
+
+      before do
+        allow(User).to receive(:find_for_oauth)
+        get :google_oauth2
+      end
+
+      it 'redirects to root path' do
+        expect(response).to redirect_to root_path
+      end
+    end
+
+    context 'no email from provider' do
+      let(:oauth_data) { OmniAuth::AuthHash.new(provider: 'google', uid: '123456', info: { email: 'nil' }) }
+
+      before do
+        @request.env['omniauth.auth'] = auth_hash(:google, nil)
+        get :google_oauth2
+      end
+
+      it 'expect redirect to email setup page' do
+        expect(response).to redirect_to email_new_path(provider: oauth_data.provider, uid: oauth_data.uid)
       end
     end
   end
