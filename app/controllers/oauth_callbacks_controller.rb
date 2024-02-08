@@ -29,7 +29,7 @@ class OauthCallbacksController < Devise::OmniauthCallbacksController
   def handle_no_email(auth_params)
     return unless auth_params
     auth = { provider: auth_params['provider'], uid: auth_params['uid'] }
-    auth_params.info[:email] = nil
+    
     if !auth_params.info[:email] && Authorization.where(auth).empty?
       session[:auth] = auth
       redirect_to email_new_path
