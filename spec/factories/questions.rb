@@ -2,7 +2,7 @@ FactoryBot.define do
   factory :question do
     title { "MyString" }
     body { "MyText" }
-    author
+    association :author
 
     trait :invalid do
       title { nil }
@@ -31,7 +31,7 @@ FactoryBot.define do
 
     trait :commented do
       after(:create) do |question|
-        create_list(:comment, 2, commentable: question)
+        create_list(:comment, 1, commentable: question)
       end
     end
   end
