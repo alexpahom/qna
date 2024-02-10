@@ -1,9 +1,10 @@
 class RanksController < ApplicationController
   before_action :authenticate_user!
 
+  authorize_resource
+
   def create
     return if current_user.author_of?(resource)
-    # return if resource.author == current_user
     resource.process_rank(params[:value], current_user)
 
     respond_to do |format|

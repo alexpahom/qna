@@ -4,6 +4,8 @@ class QuestionsController < ApplicationController
 
   after_action :publish_question, only: :create
 
+  authorize_resource
+
   def index
     @questions = Question.all
   end
@@ -31,11 +33,11 @@ class QuestionsController < ApplicationController
   end
 
   def update
-    @question.update(question_params)
+    @question.update(question_params) if current_user&.author_of?(@question)
   end
 
   def destroy
-    @question.destroy
+    @question.destroy if current_user&.author_of?(@question)
   end
 
   private
