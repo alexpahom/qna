@@ -21,16 +21,20 @@ gem 'jbuilder', '~> 2.7'
 # gem 'redis', '~> 4.0'
 # Use Active Model has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
-gem 'slim-rails'
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
-gem 'devise'
+
 gem "net-http"
-# gem 'jquery-rails'
 gem 'bootstrap'
 gem 'cocoon'
+gem 'devise'
 gem "google-cloud-storage", "~> 1.11", require: false
+gem 'omniauth'
+gem 'omniauth-github'
+gem 'omniauth-google-oauth2'
+gem 'omniauth-rails_csrf_protection'
 gem 'octokit'
+gem 'slim-rails'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false
@@ -40,6 +44,7 @@ group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'dotenv-rails'
   gem 'factory_bot_rails'
+  gem 'letter_opener'
   gem 'rspec-rails', '~> 6.0.0'
 end
 
@@ -57,6 +62,7 @@ end
 group :test do
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '>= 3.26'
+  gem 'capybara-email'
   gem 'rails-controller-testing'
   gem 'selenium-webdriver', '>= 4.0.0.rc1'
   gem 'shoulda-matchers', '~> 5.0'
