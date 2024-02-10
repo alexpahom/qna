@@ -30,10 +30,10 @@ RSpec.describe Ability do
     it { should be_able_to :create, Answer }
     it { should be_able_to :create, Comment }
 
-    it { should be_able_to :update, create(:question, user: user) }
-    it { should_not be_able_to :update, create(:question, user: other) }
+    it { should be_able_to :update, create(:question, author: user) }
+    it { should_not be_able_to :update, create(:question, author: other) }
 
-    it { should be_able_to :update, create(:answer, user: user) }
-    it { should_not be_able_to :update, create(:answer, user: other) }
+    it { should be_able_to :update, create(:answer, author: user) }
+    it { should_not be_able_to :update, create(:answer, author: other) }
   end
 end

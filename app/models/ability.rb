@@ -26,15 +26,15 @@ class Ability
   def user_abilities
     guest_abilities
     can :create, [Question, Answer, Comment]
-    can [:update, :destroy], [Question, Answer], author_id: user.id
+    can [:update, :destroy], [Question, Answer, Comment], author_id: user.id
 
     can :destroy, ActiveStorage::Attachment do |file|
       user.author_of?(file.record)
     end
 
-    can :destroy, Link, linkable: { user_id: user.id }
+    can :destroy, Link, linkable: { author_id: user.id }
 
-    can :assign_best, Answer, question: { user_id: user.id }
+    can :assign_best, Answer, question: { author_id: user.id }
 
     can :process_rank, [Answer, Question] do |rankable|
       !user.author_of?(rankable)

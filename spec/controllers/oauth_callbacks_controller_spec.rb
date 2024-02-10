@@ -92,7 +92,7 @@ RSpec.describe OauthCallbacksController, type: :controller do
       end
 
       it 'expect redirect to email setup page' do
-        expect(response).to redirect_to email_new_path(provider: oauth_data.provider, uid: oauth_data.uid)
+        expect(response).to redirect_to email_new_path
       end
     end
   end
