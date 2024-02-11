@@ -36,8 +36,8 @@ class Ability
 
     can :assign_best, Answer, question: { author_id: user.id }
 
-    can :process_rank, [Answer, Question] do |rankable|
-      !user.author_of?(rankable)
+    can :manage, Rank do |rank|
+      !user.author_of?(rank.rankable)
     end
   end
 end
