@@ -8,8 +8,9 @@
       - @question.files.each do |file|
         div(id="attachment_#{file.id}")
           = link_to file.filename.to_s, url_for(file), id: file.signed_id, class: 'px-2'
-          = link_to 'X', purge_attachment_url(file), method: :delete, remote: true,
-                  id: "delete_attachment_#{file.filename.to_s}"
+          - if can?(:destroy, file)
+            = link_to 'X', purge_attachment_url(file), method: :delete, remote: true,
+                    id: "delete_attachment_#{file.filename.to_s}"
   .col-2.badges
     - if @question.badge
       p= 'Rewarded with:'
@@ -27,7 +28,7 @@
               - else
                 = link_to link.name, link.url, target: '_blank'
 
-            - if @question.author == current_user
+            - if can?(:destroy, link)
               .col-3
                 = link_to 'X', destroy_link_url(link), method: :delete, remote: true, class: 'btn my-2'
 

@@ -1,9 +1,11 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!, except: %i[show]
   before_action :set_question, only: %i[show new create]
-  before_action :set_answer, only: %i[show edit update destroy]
+  before_action :set_answer, only: %i[show edit update destroy assign_best]
 
   after_action :publish_answer, only: :create
+
+  authorize_resource
 
   def create
     @answer = @question.answers.build(**answer_params, author: current_user)
@@ -27,6 +29,14 @@ class AnswersController < ApplicationController
 
   def destroy
     @answer.destroy
+  end
+
+  def assign_best
+    @answer.update(best: true)
+    respond_to do |format|
+      format.html { redirect_to question_path(@answer.question) }
+      format.js { render :update }
+    end
   end
 
   private

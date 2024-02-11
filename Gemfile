@@ -26,6 +26,7 @@ gem 'jbuilder', '~> 2.7'
 
 gem "net-http"
 gem 'bootstrap'
+gem 'cancancan'
 gem 'cocoon'
 gem 'devise'
 gem "google-cloud-storage", "~> 1.11", require: false

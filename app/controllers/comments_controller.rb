@@ -3,6 +3,8 @@ class CommentsController < ApplicationController
   before_action :find_resource, only: %i[new create]
   after_action :publish_comment, only: :create
 
+  authorize_resource
+
   def new; end
 
   def create
@@ -14,7 +16,6 @@ class CommentsController < ApplicationController
     @comment = Comment.find_by(id: params[:id], author: current_user)
     @comment.destroy
   end
-
 
   private
 

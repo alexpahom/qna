@@ -1,4 +1,6 @@
 class EmailController < ApplicationController
+  skip_authorization_check
+
   def new
     if session[:auth]
       @user = User.new

@@ -31,7 +31,7 @@ FactoryBot.define do
 
     trait :commented do
       after(:create) do |question|
-        create_list(:comment, 2, commentable: question)
+        create_list(:comment, 1, commentable: question)
       end
     end
   end
