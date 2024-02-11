@@ -32,12 +32,14 @@ class Ability
       user.author_of?(file.record)
     end
 
-    can :destroy, Link, linkable: { author_id: user.id }
+    can :destroy, Link do |link|
+      user.author_of? link.linkable
+    end
 
     can :assign_best, Answer, question: { author_id: user.id }
 
-    can :manage, Rank do |rank|
-      !user.author_of?(rank.rankable)
+    can :process_rank, [Question, Answer] do |rankable|
+      !user.author_of?(rankable)
     end
   end
 end

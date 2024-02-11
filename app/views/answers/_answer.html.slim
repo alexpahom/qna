@@ -10,7 +10,7 @@ div(id="answer_#{answer.id}")
       - answer.files.each do |file|
         div(id="attachment_#{file.id}")
           = link_to file.filename.to_s, url_for(file), id: file.signed_id, class: 'mx-3'
-          - if (answer.author == user) || (answer.question.author == user)
+          - if answer.author == user
             = link_to 'X', purge_attachment_url(file), method: :delete, remote: true,
                     id: "delete_attachment_#{file.filename.to_s}"
 
@@ -30,9 +30,10 @@ div(id="answer_#{answer.id}")
                     = link_to 'X', destroy_link_url(link), method: :delete, remote: true, class: 'btn my-2'
 
       - if answer.question.author == user && !answer.best?
-        = form_with model: answer, method: :put, remote: false do |f|
+        = form_with url: assign_best_answer_path(answer), method: :post, remote: false do |f|
           = f.check_box :best, checked: true, hidden: true
           = f.submit 'Set as Best Answer', class: 'btn btn-success mx-2'
+
     - if answer.author == user
       .col-md-3
         .panel(class="btn-toolbar d-flex justify-content-center align-content-center")

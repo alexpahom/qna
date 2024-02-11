@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   resources :questions do
     resources :answers, shallow: true, except: %i[new index]
   end
+  post 'answers/:id', to: 'answers#assign_best', as: 'assign_best_answer'
 
   mount ActionCable.server => '/cable'
 end
