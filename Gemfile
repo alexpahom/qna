@@ -29,6 +29,7 @@ gem 'bootstrap'
 gem 'cancancan'
 gem 'cocoon'
 gem 'devise'
+gem 'doorkeeper'
 gem "google-cloud-storage", "~> 1.11", require: false
 gem 'omniauth'
 gem 'omniauth-github'
