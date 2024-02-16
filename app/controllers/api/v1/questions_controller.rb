@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Api::V1::QuestionsController < Api::V1::BaseController
-  before_action :authenticate_user!, only: %i[update destroy]
+  # before_action :authenticate_user!, only: %i[update destroy]
   before_action :find_question, only: %i[show update destroy]
 
     def index
@@ -24,6 +24,7 @@ class Api::V1::QuestionsController < Api::V1::BaseController
     end
 
   def update
+    authorize! :update, @question
     if @question.update(question_params)
       render json: @question, status: :created
     else
@@ -32,6 +33,7 @@ class Api::V1::QuestionsController < Api::V1::BaseController
   end
 
   def destroy
+    authorize! :update, @question
     @question.destroy
     render json: { messages: ["Question was successfully deleted."] }
   end
