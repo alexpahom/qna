@@ -17,11 +17,3 @@ shared_examples_for 'Return successful' do
     expect(response).to be_successful
   end
 end
-
-shared_examples 'Public fields' do
-  it 'return all public fields' do
-    attrs.each do |attr|
-      expect(resource_response[attr]).to eq resource.send(attr).as_json
-    end
-  end
-end

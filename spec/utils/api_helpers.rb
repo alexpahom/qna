@@ -4,6 +4,7 @@ module ApiHelpers
   end
 
   def do_request(method, path, options = {})
-    send(method, path, **options)
+    # byebug
+    send(method, path, params: options)
   end
 end
