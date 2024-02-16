@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
 class Api::V1::QuestionsController < Api::V1::BaseController
-
+  before_action :authenticate_user!, only: %i[update destroy]
   before_action :find_question, only: %i[show update destroy]
+
     def index
       @questions = Question.all
       render json: @questions
@@ -21,6 +22,19 @@ class Api::V1::QuestionsController < Api::V1::BaseController
         render json: { errors: @question.errors }, status: :unprocessable_entity
       end
     end
+
+  def update
+    if @question.update(question_params)
+      render json: @question, status: :created
+    else
+      render json: { errors: @question.errors }, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    @question.destroy
+    render json: { messages: ["Question was successfully deleted."] }
+  end
 
     private
 
