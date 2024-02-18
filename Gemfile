@@ -24,12 +24,15 @@ gem 'jbuilder', '~> 2.7'
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 
+gem 'active_model_serializers', '~> 0.10.0'
 gem "net-http"
 gem 'bootstrap'
 gem 'cancancan'
 gem 'cocoon'
 gem 'devise'
+gem 'doorkeeper'
 gem "google-cloud-storage", "~> 1.11", require: false
+gem 'oj'
 gem 'omniauth'
 gem 'omniauth-github'
 gem 'omniauth-google-oauth2'

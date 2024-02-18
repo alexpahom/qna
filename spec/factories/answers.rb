@@ -14,4 +14,10 @@ FactoryBot.define do
       create_list(:comment, 1, commentable: answer)
     end
   end
+
+  trait :with_attachments do
+    after(:create) do |answer|
+      answer.files.attach(io: File.open("#{Rails.root}/Gemfile"), filename: 'Gemfile')
+    end
+  end
 end

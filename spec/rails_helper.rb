@@ -44,6 +44,7 @@ RSpec.configure do |config|
   config.include AnswersPageHelper, type: :feature
   config.include AjaxWaiter, type: :feature
   config.include OauthMocks
+  config.include ApiHelpers, type: :request
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
 

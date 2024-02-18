@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  use_doorkeeper
   get 'email/new'
   post 'email/create'
   root to: 'questions#index'
@@ -17,6 +18,18 @@ Rails.application.routes.draw do
     resources :answers, shallow: true, except: %i[new index]
   end
   post 'answers/:id', to: 'answers#assign_best', as: 'assign_best_answer'
+
+  namespace :api do
+    namespace :v1 do
+      resources :profiles, only: :index do
+        get :me, on: :collection
+      end
+
+      resources :questions, except: %i[new edit] do
+        resources :answers, except: %i[new edit], shallow: true
+      end
+    end
+  end
 
   mount ActionCable.server => '/cable'
 end

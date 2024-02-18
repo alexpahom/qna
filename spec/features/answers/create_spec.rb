@@ -1,5 +1,4 @@
 require 'rails_helper'
-require 'byebug'
 
 describe 'user can create answer', "
   In order to reply to question
