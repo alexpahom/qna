@@ -4,6 +4,7 @@ class Answer < ApplicationRecord
   include Commentable
 
   before_update :assign_best
+  after_create :notify_subscribers
 
   belongs_to :question
   belongs_to :author, class_name: 'User'
@@ -20,5 +21,9 @@ class Answer < ApplicationRecord
       UsersBadge.where(badge: question.badge).destroy_all
       self.author.badges << question.badge
     end
+  end
+
+  def notify_subscribers
+    NewAnswerNotificationJob.perform_later(question)
   end
 end
