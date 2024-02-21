@@ -31,6 +31,9 @@
             - if can?(:destroy, link)
               .col-3
                 = link_to 'X', destroy_link_url(link), method: :delete, remote: true, class: 'btn my-2'
+  .subscribe
+    - if can?(:create, Subscription)
+      = render 'subscriptions/subscription', question: @question
 
   = render 'comments/comments', resource: @question, user: current_user
 
