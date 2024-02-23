@@ -10,6 +10,7 @@ class User < ApplicationRecord
   has_many :questions, foreign_key: :author_id, dependent: :destroy
   has_many :users_badges, dependent: :destroy
   has_many :badges, through: :users_badges
+  has_many :subscriptions, dependent: :destroy
 
   def author_of?(object)
     id == object.author.id
@@ -21,5 +22,9 @@ class User < ApplicationRecord
 
   def create_authorization(auth)
     authorizations.create(provider: auth.provider, uid: auth.uid)
+  end
+
+  def subscribed_on?(question)
+    question.subscriptions.where(user: self).exists?
   end
 end

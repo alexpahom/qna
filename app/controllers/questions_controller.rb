@@ -1,6 +1,7 @@
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
   before_action :get_question, only: %i[show edit update destroy]
+  before_action :get_subscription, only: %i[show update]
 
   after_action :publish_question, only: :create
 
@@ -44,6 +45,10 @@ class QuestionsController < ApplicationController
 
   def get_question
     @question = Question.with_attached_files.find(params[:id])
+  end
+
+  def get_subscription
+    @subscription = @question.subscriptions.find_by(user: current_user)
   end
 
   def question_params

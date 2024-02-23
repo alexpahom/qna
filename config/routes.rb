@@ -1,4 +1,9 @@
+require 'sidekiq/web'
+
 Rails.application.routes.draw do
+  authenticate :user, lambda { |u| u.admin? } do
+    mount Sidekiq::Web => '/sidekiq'
+  end
 
   use_doorkeeper
   get 'email/new'
@@ -16,6 +21,7 @@ Rails.application.routes.draw do
 
   resources :questions do
     resources :answers, shallow: true, except: %i[new index]
+    resources :subscriptions, shallow: true, only: %i[create destroy]
   end
   post 'answers/:id', to: 'answers#assign_best', as: 'assign_best_answer'
 
