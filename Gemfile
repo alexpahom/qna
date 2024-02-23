@@ -32,6 +32,7 @@ gem 'cocoon'
 gem 'devise'
 gem 'doorkeeper'
 gem "google-cloud-storage", "~> 1.11", require: false
+gem 'mysql2', '~> 0.4'
 gem 'oj'
 gem 'omniauth'
 gem 'omniauth-github'
@@ -41,6 +42,7 @@ gem 'octokit'
 gem 'sidekiq'
 gem 'sinatra', require: false
 gem 'slim-rails'
+gem 'thinking-sphinx', '~> 5.5'
 gem 'whenever', require: false
 
 # Reduces boot times through caching; required in config/boot.rb
@@ -70,6 +72,7 @@ group :test do
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '>= 3.26'
   gem 'capybara-email'
+  gem 'database_cleaner'
   gem 'rails-controller-testing'
   gem 'selenium-webdriver', '>= 4.0.0.rc1'
   gem 'shoulda-matchers', '~> 5.0'

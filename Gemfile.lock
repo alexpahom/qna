@@ -101,6 +101,12 @@ GEM
     concurrent-ruby (1.2.2)
     connection_pool (2.4.1)
     crass (1.0.6)
+    database_cleaner (2.0.2)
+      database_cleaner-active_record (>= 2, < 3)
+    database_cleaner-active_record (2.1.0)
+      activerecord (>= 5.a)
+      database_cleaner-core (~> 2.0.0)
+    database_cleaner-core (2.0.1)
     date (3.3.3)
     declarative (0.0.20)
     devise (4.9.3)
@@ -170,9 +176,12 @@ GEM
     httpclient (2.8.3)
     i18n (1.14.1)
       concurrent-ruby (~> 1.0)
+    innertube (1.1.0)
     jbuilder (2.11.5)
       actionview (>= 5.0.0)
       activesupport (>= 5.0.0)
+    joiner (0.6.0)
+      activerecord (>= 6.1.0)
     jsonapi-renderer (0.2.2)
     jwt (2.7.1)
     launchy (2.5.2)
@@ -193,6 +202,7 @@ GEM
     marcel (1.0.2)
     matrix (0.4.2)
     method_source (1.0.0)
+    middleware (0.1.0)
     mini_mime (1.1.5)
     minitest (5.20.0)
     msgpack (1.7.2)
@@ -200,6 +210,7 @@ GEM
     multi_xml (0.6.0)
     mustermann (3.0.0)
       ruby2_keywords (~> 0.0.1)
+    mysql2 (0.5.6)
     net-http (0.3.2)
       uri
     net-imap (0.3.7)
@@ -312,6 +323,7 @@ GEM
       railties (>= 5.2)
     retriable (3.1.2)
     rexml (3.2.6)
+    riddle (2.4.3)
     rspec-core (3.12.2)
       rspec-support (~> 3.12.0)
     rspec-expectations (3.12.3)
@@ -385,6 +397,13 @@ GEM
       activesupport (>= 5.2)
       sprockets (>= 3.0.0)
     temple (0.10.2)
+    thinking-sphinx (5.5.1)
+      activerecord (>= 4.2.0)
+      builder (>= 2.1.2)
+      innertube (>= 1.0.2)
+      joiner (>= 0.3.4)
+      middleware (>= 0.1.0)
+      riddle (~> 2.3)
     thor (1.2.2)
     tilt (2.2.0)
     timeout (0.4.0)
@@ -436,6 +455,7 @@ DEPENDENCIES
   capybara (>= 3.26)
   capybara-email
   cocoon
+  database_cleaner
   devise
   doorkeeper
   dotenv-rails
@@ -444,6 +464,7 @@ DEPENDENCIES
   jbuilder (~> 2.7)
   letter_opener
   listen (~> 3.3)
+  mysql2 (~> 0.4)
   net-http
   octokit
   oj
@@ -464,6 +485,7 @@ DEPENDENCIES
   sinatra
   slim-rails
   spring
+  thinking-sphinx (~> 5.5)
   turbolinks (~> 5)
   tzinfo-data
   web-console (>= 4.1.0)

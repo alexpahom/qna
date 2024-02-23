@@ -1,0 +1,8 @@
+span Here's what we've found:
+
+- if @results.empty?
+  span Nothing :)
+- else
+  - @results.each do |result|
+    -byebug
+    = render result.scope, resource: result
