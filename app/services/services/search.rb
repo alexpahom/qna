@@ -3,9 +3,10 @@
 class Services::Search
   SCOPES = %w[thinking_sphinx user comment question answer].freeze
 
-  def self.perform(query)
-    return unless SCOPES.include?(query[:scope])
+  def self.perform(input)
+    return unless SCOPES.include?(input[:scope])
 
-    query[:scope].classify.constantize.search(query)
+    escaped = ThinkingSphinx::Query.escape(input[:query])
+    input[:scope].classify.constantize.search(escaped)
   end
 end

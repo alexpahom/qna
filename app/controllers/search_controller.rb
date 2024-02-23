@@ -3,11 +3,7 @@ class SearchController < ApplicationController
   skip_authorization_check
 
   def index
-    if params[:query].blank?
-      render :index
-    else
-      @results  = Services::Search.perform(search_params)
-    end
+    @results  = Services::Search.perform(search_params)
   end
 
   private

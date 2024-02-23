@@ -1,13 +1,17 @@
-.container.m-4.d-flex.justify-content-center
-  = form_with url: search_index_path, method: :get, local: true do |f|
-    .row
-      .col-xs-8.col-xs-offset-2
-        .input-group
-          .input-group-btn.search-panel
-            = f.select :scope, options_for_select([%w(All thinking_sphinx),
-                    %w(Question question),
-                    %w(Answer answer),
-                    %w(Comment comment),
-                    %w(User user)], selected: %w(All thinking_sphinx))
-            = f.text_field :query
-            = f.submit 'Search'
+.d-flex.justify-content-center
+  .col-xs-8.col-xs-offset-2
+    = form_with url: search_index_path, method: :get, local: true do |f|
+      .container.m-4.d-flex.flex-row.align-items-center
+        .mx-1 Look in
+        .mx-2
+          = f.select :scope, options_for_select([%w(Everywhere thinking_sphinx),
+                  %w(Question question),
+                  %w(Answer answer),
+                  %w(Comment comment),
+                  %w(User user)],
+                  selected: %w(Everywhere thinking_sphinx)), {}, { class: 'form-select' }
+        .mx-2
+          = f.text_field :query, class: 'form-control'
+        .mx-2.btn-group
+          = f.submit 'Search', class: 'btn btn-primary'
+          = link_to 'Back', root_path, class: 'btn btn-secondary'
