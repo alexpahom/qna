@@ -1,0 +1,32 @@
+.results-wrapper.mx-5
+  .mb-5 Here's what we've found:
+
+  - if @results.empty?
+    span Nothing :)
+  - else
+    - @results.each do |result|
+      .search-result-item.mb-3.d-flex
+        - if result.is_a? Question
+          .header.mx-3 Question:
+          = link_to result.title, question_path(result)
+
+        - elsif result.is_a? Answer
+          .header.mx-3 Answer:
+          = result.body.truncate(25)
+          .fst-italic.ms-4
+            = "in question "
+            = link_to result.question.title, question_path(result.question)
+
+        - elsif result.is_a? Comment
+          .header.mx-3 Comment:
+          = result.body.truncate(25)
+          .fst-italic.ms-4
+            = "in question "
+            - if result.commentable.is_a? Question
+              = link_to result.commentable.title, question_path(result.commentable)
+            - else
+              = link_to result.commentable.question.title, question_path(result.commentable.question)
+
+        - elsif result.is_a? User
+          .header.mx-3 User:
+          = result.email

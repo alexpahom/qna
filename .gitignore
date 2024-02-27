@@ -38,3 +38,6 @@ yarn-debug.log*
 keys/*.json
 .env
 .idea/*
+
+/config/*.sphinx.conf
+/db/sphinx
