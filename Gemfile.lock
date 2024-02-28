@@ -484,8 +484,8 @@ DEPENDENCIES
   bootstrap
   byebug
   cancancan
-  capistrano
-  capistrano-bundler
+  capistrano (~> 3.0)
+  capistrano-bundler (>= 1.1.0)
   capistrano-passenger
   capistrano-rails
   capistrano-rvm
