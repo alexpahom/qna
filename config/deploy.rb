@@ -12,6 +12,9 @@ ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
 set :deploy_to, "/home/deployer/qna"
 set :deploy_user, 'deployer'
 
+set :rvm_type, :user                     # Defaults to: :auto
+set :rvm_ruby_version, '3.2.1'      # Defaults to: 'default'
+
 # Default value for :format is :airbrussh.
 # set :format, :airbrussh
 
@@ -30,7 +33,6 @@ append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "public/syst
 
 # Default value for default_env is {}
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
-set :rvm_ruby, '3.2.1'
 
 # Default value for local_user is ENV['USER']
 # set :local_user, -> { `git config user.name`.chomp }
