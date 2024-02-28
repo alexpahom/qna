@@ -15,6 +15,8 @@ set :deploy_user, 'deployer'
 set :rvm_type, :user                     # Defaults to: :auto
 set :rvm_ruby_version, '3.2.1'      # Defaults to: 'default'
 
+set :bundle_jobs, 1
+
 # Default value for :format is :airbrussh.
 # set :format, :airbrussh
 
