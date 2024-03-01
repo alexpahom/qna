@@ -5,8 +5,8 @@ set :application, "qna"
 set :repo_url, "git@github.com:alexpahom/qna.git"
 
 # Default branch is :master
-ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
-# set :branch, 'feature/deploy'
+# ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
+set :branch, 'main'
 
 # Default deploy_to directory is /var/www/my_app_name
 set :deploy_to, "/home/deployer/qna"
