@@ -43,6 +43,7 @@ gem 'sidekiq'
 gem 'sinatra', require: false
 gem 'slim-rails'
 gem 'thinking-sphinx', '~> 5.5'
+gem 'unicorn'
 gem 'whenever', require: false
 
 # Reduces boot times through caching; required in config/boot.rb
