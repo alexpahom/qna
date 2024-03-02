@@ -1,0 +1,6 @@
+div(id="question_#{question.id}" class="container m-3")
+  div(class="col-10 row mb-4 border-bottom")
+    .col-2
+    .col-6
+      .question(id="question_title_#{question.id}" class="col fs-4 mb-3") = question.title
+      .question(id="question_body_#{question.id}" class="col") = question.body

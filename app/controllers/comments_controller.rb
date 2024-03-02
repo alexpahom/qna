@@ -27,7 +27,7 @@ class CommentsController < ApplicationController
       if @comment.errors.empty?
         {
           status: :ok,
-          render_params: { partial: 'comments/comment', locals: { comment: @comment, user: nil } }
+          render_params: { partial: 'comments/comment_simplified', locals: { comment: @comment } }
         }
       else
         {

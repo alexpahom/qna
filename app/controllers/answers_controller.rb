@@ -58,7 +58,7 @@ class AnswersController < ApplicationController
       if @answer.errors.empty?
         {
           status: :ok,
-          render_params: { partial: 'answers/answer', locals: { answer: @answer, user: nil } }
+          render_params: { partial: 'answers/answer_simplified', locals: { answer: @answer } }
         }
       else
         {
