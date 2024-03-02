@@ -1,0 +1,5 @@
+.border-bottom.mb-2.p-2(id="comment_#{comment.id}")
+  p = comment.body
+  p.text-end
+    = 'By '
+    em = comment.author.email

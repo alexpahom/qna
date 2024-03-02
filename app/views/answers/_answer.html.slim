@@ -1,65 +1,56 @@
-div(id="answer_#{answer.id}")
-  .row.border-bottom.my-3.p-3
-    .col-2
-      = render 'shared/rankings', resource: answer, user: user
-    .col-md-5
-      - if answer.best?
-        = 'BEST ANSWER'
-      p.answer(id="answer_text_#{answer.id}") = answer.body
-
-      - answer.files.each do |file|
-        div(id="attachment_#{file.id}")
-          = link_to file.filename.to_s, url_for(file), id: file.signed_id, class: 'mx-3'
-          - if answer.author == user
-            = link_to 'X', purge_attachment_url(file), method: :delete, remote: true,
-                    id: "delete_attachment_#{file.filename.to_s}"
-
-      .links
-        ul
-          - answer.links.each do |link|
-            li(id="link_#{link.id}")
-              .row
-                .gist-wrapper.col-6
-                  - if link.gist?
-                    = render 'shared/gist_uploader', link: link
-                  - else
-                    = link_to link.name, link.url, target: '_blank'
-
-                - if answer.author == user
-                  .col-3
-                    = link_to 'X', destroy_link_url(link), method: :delete, remote: true, class: 'btn my-2'
-
-      - if answer.question.author == user && !answer.best?
-        = form_with url: assign_best_answer_path(answer), method: :post, remote: false do |f|
-          = f.check_box :best, checked: true, hidden: true
-          = f.submit 'Set as Best Answer', class: 'btn btn-success mx-2'
-
-    - if answer.author == user
-      .col-md-3
-        .panel(class="btn-toolbar d-flex justify-content-center align-content-center")
-          = button_to 'Edit', edit_answer_path(answer), method: :get, remote: true, id: "edit_#{answer.id}", class: 'btn btn-primary mx-3'
-          = button_to 'Delete', answer_path(answer), method: :delete, remote: true, class: 'btn btn-secondary mx-3'
-
-      .errors(style='display:none' id="errors_#{answer.id}")
-      .edit_form(style='display:none' id="edit_form_#{answer.id}")
-        = form_with model: answer, method: :put, local: false do |f|
-          .mb-3
-            = f.label :body, 'Respond', class: 'form-label'
-            = f.text_field :body, name: 'answer[body]', class: 'form-control'
-
-          .mb-3
-            = f.label :files, 'Attach', class: 'form-label'
-            = f.file_field :files, multiple: true, class: 'form-control'
-
-          .mb-3
-            = f.fields_for :links do |l|
-              = render 'link_fields', f: l
-            .links
-              = link_to_add_association 'Add', f, :links
-
-          .mb-3
-            = f.submit 'Update', class: 'btn btn-primary'
-            = button_to 'Cancel', edit_answer_path(answer), method: :get, remote: true, id: "cancel_#{answer.id}",
-                    class: 'btn btn-secondary mx-3', style: 'display:none'
-
-    = render 'comments/comments', resource: answer, user: user
+- cache answer do
+  div(id="answer_#{answer.id}")
+    .row.border-bottom.my-3.p-3
+      .col-2
+        = render 'shared/rankings', resource: answer
+      .col-md-5
+        - if answer.best?
+          = 'BEST ANSWER'
+        p.answer(id="answer_text_#{answer.id}") = answer.body
+        - answer.files.each do |file|
+          div(id="attachment_#{file.id}")
+            = link_to file.filename.to_s, url_for(file), id: file.signed_id, class: 'mx-3'
+            - if can?(:destroy, file)
+              = link_to 'X', purge_attachment_url(file), method: :delete, remote: true,
+                      id: "delete_attachment_#{file.filename.to_s}"
+        .links
+          ul
+            - answer.links.each do |link|
+              li(id="link_#{link.id}")
+                .row
+                  .gist-wrapper.col-6
+                    - if link.gist?
+                      = render 'shared/gist_uploader', link: link
+                    - else
+                      = link_to link.name, link.url, target: '_blank'
+                  - if can?(:destroy, link)
+                    .col-3
+                      = link_to 'X', destroy_link_url(link), method: :delete, remote: true, class: 'btn my-2'
+        - if can?(:assign_best, answer) && !answer.best?
+          = form_with url: assign_best_answer_path(answer), method: :post, remote: false do |f|
+            = f.check_box :best, checked: true, hidden: true
+            = f.submit 'Set as Best Answer', class: 'btn btn-success mx-2'
+      - if can?(:update, answer)
+        .col-md-3
+          .panel(class="btn-toolbar d-flex justify-content-center align-content-center")
+            = button_to 'Edit', edit_answer_path(answer), method: :get, remote: true, id: "edit_#{answer.id}", class: 'btn btn-primary mx-3'
+            = button_to 'Delete', answer_path(answer), method: :delete, remote: true, class: 'btn btn-secondary mx-3'
+        .errors(style='display:none' id="errors_#{answer.id}")
+        .edit_form(style='display:none' id="edit_form_#{answer.id}")
+          = form_with model: answer, method: :put, local: false do |f|
+            .mb-3
+              = f.label :body, 'Respond', class: 'form-label'
+              = f.text_field :body, name: 'answer[body]', class: 'form-control'
+            .mb-3
+              = f.label :files, 'Attach', class: 'form-label'
+              = f.file_field :files, multiple: true, class: 'form-control'
+            .mb-3
+              = f.fields_for :links do |l|
+                = render 'link_fields', f: l
+              .links
+                = link_to_add_association 'Add', f, :links
+            .mb-3
+              = f.submit 'Update', class: 'btn btn-primary'
+              = button_to 'Cancel', edit_answer_path(answer), method: :get, remote: true, id: "cancel_#{answer.id}",
+                      class: 'btn btn-secondary mx-3', style: 'display:none'
+      = render 'comments/comments', resource: answer

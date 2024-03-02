@@ -1,5 +1,5 @@
 div.border-bottom.mb-2.p-2(id="comment_#{comment.id}")
-  - if comment.author == user
+  - if can?(:destroy, comment)
     .d-flex.justify-content-end.align-items-end
       = button_to 'X', comment_path(comment), method: :delete, remote: true, class: 'btn btn-sm'
   p = comment.body

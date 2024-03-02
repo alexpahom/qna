@@ -17,6 +17,8 @@ module Qna
     # in config/environments, which are processed later.
 
     config.active_job.queue_adapter = :sidekiq
+
+    config.cache_store = :redis_store, 'redis://localhost:6370/0/cache', { expires_in: 90.minutes }
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
     config.generators do |g|
