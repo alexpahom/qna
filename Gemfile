@@ -39,6 +39,7 @@ gem 'omniauth-github'
 gem 'omniauth-google-oauth2'
 gem 'omniauth-rails_csrf_protection'
 gem 'octokit'
+gem 'redis-rails'
 gem 'sidekiq'
 gem 'sinatra', require: false
 gem 'slim-rails'
